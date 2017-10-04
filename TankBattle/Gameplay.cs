@@ -75,7 +75,52 @@ namespace TankBattle
 
         public static Color GetColour(int playerNum)
         {
-            throw new NotImplementedException();
+            Color a = Color.AntiqueWhite;
+            Color b = Color.Blue;
+            Color c = Color.Crimson;
+            Color d = Color.DeepPink;
+            Color e = Color.DarkViolet;
+            Color f = Color.ForestGreen;
+            Color g = Color.GreenYellow;
+            Color h = Color.Honeydew;
+
+            if (playerNum == 1)
+            {
+                return a;
+            } else 
+            if (playerNum == 2)
+            {
+                return b;
+            } else
+            if (playerNum == 3)
+            {
+                return c;
+            } else
+            if (playerNum == 4)
+            { 
+                return d;
+            } else
+            if (playerNum == 5)
+            {
+                return e;
+            } else
+            if (playerNum == 6)
+            {
+                return f;
+            } else
+            if (playerNum == 7)
+            {
+                return g;
+            } else
+            if (playerNum == 8)
+            {
+                return h;
+            } else
+            {
+                return Color.Black;
+            }
+                
+            
         }
 
         public static int[] GetPlayerPositions(int numPlayers)
