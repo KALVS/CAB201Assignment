@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace TankBattle
 {
+
     public abstract class Chassis
     {
         public const int WIDTH = 4;
@@ -75,8 +76,21 @@ namespace TankBattle
 
         public static Chassis GetTank(int tankNumber)
         {
-            
+            /*
+            This is a factory method, used to create a new object of a concrete class that inherits
+            from Chassis and return it.
+            This way different parts of the program can create a variety of different tanks
+            without having to know anything about your concrete class.
+
+            If you only have one type of tank your method can simply be something like:
+
+            return new MyTank();
+
+            If you have multiple varieties of tank,
+            you will want to return a specific type of tank based on the value of tankNumber.
+            The unit tests assume that tank numbers start at 1.*/
             throw new NotImplementedException();
         }
+
     }
 }
