@@ -19,8 +19,6 @@ namespace TankBattle
 
         public Gameplay(int numPlayers, int numRounds)
         {
-            this.numberOfPlayers = numPlayers;
-
             int[] Opponent = new int[numPlayers];
             Weapon = new List<WeaponEffect>();
             
