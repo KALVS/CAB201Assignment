@@ -138,10 +138,19 @@ namespace TankBattle
 
         public static void RandomReorder(int[] array)
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            for (int i = 0; i < array.Length; i++)
+            {
+                int idx = random.Next(i, array.Length);
+
+                //swap elements
+                int tmp = array[i];
+                array[i] = array[idx];
+                array[idx] = tmp;
+            }
         }
 
-        public void CommenceGame()
+public void CommenceGame()
         {
             throw new NotImplementedException();
         }
