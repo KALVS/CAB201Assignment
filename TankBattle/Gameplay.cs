@@ -15,7 +15,6 @@ namespace TankBattle
         List<WeaponEffect> Weapon;
         int[] Opponent;
         int current_round = 0;
-        int playernumber = 1;
 
         public Gameplay(int numPlayers, int numRounds)
         {
@@ -125,7 +124,16 @@ namespace TankBattle
 
         public static int[] GetPlayerPositions(int numPlayers)
         {
-            throw new NotImplementedException();
+            int segments = numPlayers + 1;
+            int dist = Battlefield.WIDTH / segments;
+            int[] playerPositions = new int[numPlayers];
+            
+            for (int player = 0; player <= numPlayers-1; player++)
+            {
+                playerPositions[player] = (dist/2) + (dist * player);
+            }
+            return playerPositions;
+
         }
 
         public static void RandomReorder(int[] array)
