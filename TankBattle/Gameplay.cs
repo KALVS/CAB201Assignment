@@ -130,7 +130,7 @@ namespace TankBattle
             
             for (int player = 0; player <= numPlayers-1; player++)
             {
-                playerPositions[player] = (dist/2) + (dist * player);
+                playerPositions[player] = (dist/2) + (dist * player) - (Chassis.WIDTH/2);
             }
             return playerPositions;
 
