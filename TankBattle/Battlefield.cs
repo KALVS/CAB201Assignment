@@ -61,19 +61,7 @@ namespace TankBattle
 
         public bool TankFits(int x, int y)
         {
-            bool result = false;
-            for (int ex = 0; ex < Chassis.WIDTH; ex++)
-            {
-                for (int ey = 0; ey < Chassis.HEIGHT; ey++)
-                {
-                    if (terrain[y + ey, x + ex] == true)
-                    {
-                        result = true;
-                        return result;
-                    }
-                }
-            }
-            return result;
+            throw new NotImplementedException();
         }
 
         public int TankYPosition(int x)
