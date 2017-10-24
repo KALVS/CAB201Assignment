@@ -78,7 +78,20 @@ namespace TankBattle
 
         public int TankYPosition(int x)
         {
-            throw new NotImplementedException();
+            bool grounded = false;
+            int ey = 0;
+            while (!grounded)
+            {
+                if (terrain[ey, x] == false)
+                {
+                    ey++;
+                }
+                else if (terrain[ey, x] == true)
+                {
+                    grounded = true;
+                }
+            }
+            return ey - Chassis.HEIGHT;
         }
 
         public void TerrainDestruction(float destroyX, float destroyY, float radius)
