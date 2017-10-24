@@ -64,7 +64,7 @@ namespace TankBattle
 
         public Opponent GetPlayer(int playerNum)
         {
-            throw new NotImplementedException();
+            return opponents[playerNum-1];
         }
 
         public PlayerTank PlayerTank(int playerNum)

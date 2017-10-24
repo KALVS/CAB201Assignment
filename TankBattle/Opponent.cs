@@ -26,19 +26,19 @@ namespace TankBattle
         }
         public string Identifier()
         {
-            throw new NotImplementedException();
+            return name;
         }
         public Color GetColour()
         {
-            throw new NotImplementedException();
+            return colour;
         }
         public void AddScore()
         {
-            throw new NotImplementedException();
+            rounds_won++;
         }
         public int GetPoints()
         {
-            throw new NotImplementedException();
+            return rounds_won;
         }
 
         public abstract void StartRound();
