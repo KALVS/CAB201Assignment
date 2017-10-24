@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace TankBattle
 {
+    
     public class Battlefield
     {
         public const int WIDTH = 160;
         public const int HEIGHT = 120;
+        bool[,] terrain = new bool[Battlefield.HEIGHT, Battlefield.WIDTH];
 
         public Battlefield()
         {
-            bool [,] terrain = new bool[Battlefield.HEIGHT, Battlefield.WIDTH];
             for (int y = 3; y < Battlefield.HEIGHT - 1; y++)
             {
                 for (int x = 0; x < Battlefield.WIDTH - 1; x++)
@@ -47,7 +48,15 @@ namespace TankBattle
 
         public bool IsTileAt(int x, int y)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            if (terrain[y,x] == true)
+            {
+                result = true;
+            } else if (terrain[y,x] == false)
+            {
+                result = false;
+            }
+            return result;
         }
 
         public bool TankFits(int x, int y)
