@@ -89,8 +89,31 @@ namespace TankBattle
             If you have multiple varieties of tank,
             you will want to return a specific type of tank based on the value of tankNumber.
             The unit tests assume that tank numbers start at 1.*/
+            return new CreateTank();
+        }
+
+    }
+
+    public class CreateTank : Chassis
+    {
+        public override int[,] DrawTankSprite(float angle)
+        {
             throw new NotImplementedException();
         }
 
+        public override int GetTankHealth()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WeaponLaunch(int weapon, PlayerTank playerTank, Gameplay currentGame)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string[] Weapons()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
