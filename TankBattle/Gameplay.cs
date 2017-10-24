@@ -15,7 +15,8 @@ namespace TankBattle
         List<WeaponEffect> Weapon;
         private Opponent[] opponents;
         private int current_round;
-
+        private Opponent startingplayer;
+        private Opponent currentplayer;
         public Gameplay(int numPlayers, int numRounds)
         {
             this.numberOfPlayers = numPlayers;
@@ -153,13 +154,15 @@ namespace TankBattle
 public void CommenceGame()
         {
             current_round = 1;
-            numberOfPlayers = 0;
+            startingplayer = opponents[0];
             BeginRound();
         }
 
         public void BeginRound()
         {
-            throw new NotImplementedException();
+            currentplayer = startingplayer;
+            GetMap();
+            GetPlayerPositions(opponents.Length);
         }
 
         public Battlefield GetMap()

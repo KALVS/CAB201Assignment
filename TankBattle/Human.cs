@@ -10,16 +10,10 @@ namespace TankBattle
     public class Human : Opponent
     {
         //This most likely is wrong.
-        private string name;
-        private Chassis tank;
-        private Color colour;
-        private int rounds_won;
+
         public Human(string name, Chassis tank, Color colour) : base(name, tank, colour)
         {
-            this.name = name;
-            this.tank = tank;
-            this.colour = colour;
-            rounds_won = 0;
+
         }
 
         public override void StartRound()
