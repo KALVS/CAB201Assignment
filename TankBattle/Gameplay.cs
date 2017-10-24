@@ -10,11 +10,11 @@ namespace TankBattle
 {
     public class Gameplay
     {
-        int numberOfPlayers;
-        int numberOfRounds;
+        private int numberOfPlayers;
+        private int numberOfRounds;
         List<WeaponEffect> Weapon;
         private Opponent[] opponents;
-        int current_round = 0;
+        private int current_round;
 
         public Gameplay(int numPlayers, int numRounds)
         {
@@ -64,7 +64,7 @@ namespace TankBattle
 
         public Opponent GetPlayer(int playerNum)
         {
-            return opponents[playerNum-1];
+            return opponents[playerNum - 1];
         }
 
         public PlayerTank PlayerTank(int playerNum)
@@ -152,7 +152,9 @@ namespace TankBattle
 
 public void CommenceGame()
         {
-            throw new NotImplementedException();
+            current_round = 1;
+            numberOfPlayers = 0;
+            BeginRound();
         }
 
         public void BeginRound()
