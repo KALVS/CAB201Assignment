@@ -10,19 +10,21 @@ namespace TankBattle
 {
     public class Gameplay
     {
-        private int numRounds = 5;
         int numberOfPlayers;
+        int numberOfRounds;
         List<WeaponEffect> Weapon;
-        int[] Opponent;
+        private Opponent[] opponents;
         int current_round = 0;
 
         public Gameplay(int numPlayers, int numRounds)
         {
             this.numberOfPlayers = numPlayers;
-
-            int[] Opponent = new int[numPlayers];
+            //Creates a numPlayers size array of Opponent(which is stored as a private field of Gameplay)
+            this.opponents = new Opponent[numPlayers];
+            //Sets another private field to the number of rounds that will be played
+            this.numberOfRounds = numRounds;
+            //Creates an array or list collection of WeaponEffect
             Weapon = new List<WeaponEffect>();
-            
         }
 
         public int NumPlayers()
@@ -30,8 +32,7 @@ namespace TankBattle
             if (numberOfPlayers < 2)
             {
                 numberOfPlayers = 2;
-            }
-            if (numberOfPlayers > 8)
+            } else if (numberOfPlayers > 8)
             {
                 numberOfPlayers = 8;
             }
@@ -46,20 +47,19 @@ namespace TankBattle
 
         public int GetMaxRounds()
         {
-            return numRounds;
+            if (numberOfRounds < 2)
+            {
+                numberOfRounds = 2;
+            } else if (numberOfRounds > 100)
+            {
+                numberOfRounds = 100;
+            }
+            return numberOfRounds;
         }
 
         public void RegisterPlayer(int playerNum, Opponent player)
         {
-            //take the player number between 1 and numver of players
-            //set the appropriate field in gameplay's opponent array to player
-            //note to -1 from playernumber
-            for (int i = numberOfPlayers; i > 1; i--)
-            {
-                playerNum = i;
-                int[] opponent = new int[] { playerNum };
-                
-            }
+            opponents[playerNum - 1] = player;
         }
 
         public Opponent GetPlayer(int playerNum)

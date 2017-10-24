@@ -97,6 +97,14 @@ namespace TankBattle
         public void TerrainDestruction(float destroyX, float destroyY, float radius)
         {
             throw new NotImplementedException();
+            /*
+            for (int y = 0; y < Battlefield.HEIGHT; y++)
+            {
+                for (int x = 0; x < Battlefield.WIDTH; x++)
+                {
+                    //distance between x and y
+                }
+            }*/
         }
 
         public bool CalculateGravity()
