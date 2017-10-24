@@ -13,7 +13,36 @@ namespace TankBattle
 
         public Battlefield()
         {
-            throw new NotImplementedException();
+            bool [,] terrain = new bool[Battlefield.HEIGHT, Battlefield.WIDTH];
+            for (int y = 3; y < Battlefield.HEIGHT - 1; y++)
+            {
+                for (int x = 0; x < Battlefield.WIDTH - 1; x++)
+                {
+
+                    //random true or false and if true below
+                    Random rnd = new Random();
+                    bool tile = rnd.Next(0, 100) % 2 == 0;
+                    if (tile == false)
+                    {
+                        terrain[y, x] = tile;
+                    }
+                    if (terrain[y - 1, x] == true)
+                    {
+                        terrain[y, x] = tile;
+                    }
+                }
+            }
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < Battlefield.WIDTH - 1; x++)
+                {
+                    terrain[y, x] = false;
+                }
+            }
+            for (int x = 0; x < Battlefield.WIDTH - 1; x++)
+            {
+                terrain[Battlefield.HEIGHT - 1, x] = true;
+            }
         }
 
         public bool IsTileAt(int x, int y)
