@@ -199,6 +199,7 @@ public void CommenceGame()
 
         public Battlefield GetMap()
         {
+            return terrain;
         }
 
         public void DrawTanks(Graphics graphics, Size displaySize)
