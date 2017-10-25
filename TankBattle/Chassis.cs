@@ -108,7 +108,8 @@ namespace TankBattle
         public override int[,] DrawTankSprite(float angle)
         {
 
-            int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            int[,] graphic = {
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -119,8 +120,37 @@ namespace TankBattle
                    { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
                    { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
                    { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
-                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            };
+            if (angle < -67.5)
+            {
+                LineDraw(graphic, 6, 7, 6, 2);
+            }
+            if (angle >= -67.5)
+            {
+                if (angle < -22.5)
+                {
+                    LineDraw(graphic, 6, 7, 2, 3);
+                }
+            }
+            if (angle >= -22.5)
+            {
+                if (angle < 22.5)
+                {
+                    LineDraw(graphic, 7, 6, 7, 1);
+                }
+            }
+            if (angle >= 22.5)
+            {
+                if (angle < 67.5)
+                {
+                    LineDraw(graphic, 7, 6, 1, 2);
+                }
+            }
+            if (angle >= 67.5)
+            {
+                LineDraw(graphic, 7, 6, 11, 6);
+            }
             return graphic;
         }
 
@@ -131,7 +161,13 @@ namespace TankBattle
 
         public override void WeaponLaunch(int weapon, PlayerTank playerTank, Gameplay currentGame)
         {
-            throw new NotImplementedException();
+            float x = (float)(playerTank.XPos() + Chassis.WIDTH/2);
+            float y = (float)(playerTank.GetY() + Chassis.HEIGHT/2);
+            Opponent player = playerTank.GetPlayer();
+            Shrapnel shrap = new Shrapnel(100, 4, 4);
+            Shell shock = new Shell(x, y, playerTank.GetAngle(), playerTank.GetPower(), 0.01f, shrap, playerTank.GetPlayer());
+            currentGame.AddEffect(shock);
+
         }
 
         public override string[] Weapons()
