@@ -18,7 +18,16 @@ namespace TankBattle
 
         public static void LineDraw(int[,] graphic, int X1, int Y1, int X2, int Y2)
         {
-            throw new NotImplementedException();
+            int dx = X2 - X1;
+            int dy = Y2 - Y1;
+            int y;
+            for (int x = 0; x < (X1 - X2 + 1); x++)
+            {
+                y = Y1 + dy * (x - X1) / dx;
+                graphic[y, x] = 1;
+
+            }
+        
         }
 
         public Bitmap CreateTankBitmap(Color tankColour, float angle)
@@ -98,7 +107,21 @@ namespace TankBattle
     {
         public override int[,] DrawTankSprite(float angle)
         {
-            throw new NotImplementedException();
+
+            int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
+                   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
+                   { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
+                   { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+            return graphic;
         }
 
         public override int GetTankHealth()
