@@ -9,14 +9,21 @@ namespace TankBattle
 {
     public class Shrapnel : WeaponEffect
     {
+        private int ExDam, ExRad, EarthDestRad;
+        private float lifespan;
+        private float shrapX, shrapY;
         public Shrapnel(int explosionDamage, int explosionRadius, int earthDestructionRadius)
         {
-            throw new NotImplementedException();
+            ExDam = explosionDamage;
+            ExRad = explosionRadius;
+            EarthDestRad = earthDestructionRadius;
         }
 
         public void Activate(float x, float y)
         {
-            throw new NotImplementedException();
+            shrapX = x;
+            shrapY = y;
+            lifespan = 1.0f;
         }
 
         public override void Step()

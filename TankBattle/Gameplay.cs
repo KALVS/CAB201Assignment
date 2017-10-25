@@ -192,6 +192,7 @@ public void CommenceGame()
             }
 
             //Initialising the wind speed, another private field of Gameplay, to a random number between -100 and 100.
+            WindSpeed();
             //Creating a new BattleForm and Show()ing it.
             BattleForm BF = new BattleForm(this);
             BF.Show();
