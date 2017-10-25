@@ -17,6 +17,11 @@ namespace TankBattle
         private int current_round;
         private Opponent startingplayer;
         private Opponent currentplayer;
+        private Battlefield terrain;
+        private int[] playerpos;
+        private PlayerTank[] Playertanks;
+        private int wind;
+
         public Gameplay(int numPlayers, int numRounds)
         {
             this.numberOfPlayers = numPlayers;
@@ -160,18 +165,45 @@ public void CommenceGame()
 
         public void BeginRound()
         {
+            //Initialising a private field of Gameplay representing the current player to the value of the starting Opponent field(see CommenceGame).
             currentplayer = startingplayer;
-            GetMap();
-            GetPlayerPositions(opponents.Length);
+            //Creating a new Battlefield, which is also stored as a private field of Gameplay.
+            terrain = new Battlefield();
+            //Creating an array of Opponent positions by calling GetPlayerPositions with the number of Opponents playing the game(hint: get the length of the Opponents array
+            playerpos = GetPlayerPositions(opponents.Length);
+            //Looping through each Opponent and calling its StartRound method.
+            for (int i = 0; i < opponents.Length; i++)
+            {
+                opponents[i].StartRound();
+            }
+            //Shuffling that array of positions with the RandomReorder method.
+            RandomReorder(playerpos);
+            //Creating an array of PlayerTank as a private field.There should be the same number of PlayerTanks as there are Opponents in the Opponent array.
+            Playertanks = new PlayerTank[opponents.Length];
+
+            //Initialising the array of PlayerTank by finding the horizontal position of the PlayerTank
+            //(by looking up the appropriate index of the array returned by GetPlayerPositions and shuffled with the RandomReorder method)
+
+            //the vertical position of the PlayerTank(by calling TankYPosition() on the Battlefield with the horizontal position as an argument)
+            //and then calling PlayerTank's constructor to create that PlayerTank (passing in the appropriate Opponent, the horizontal position, the vertical position and a reference to this)
+            for (int i = 0; i < playerpos.Length; i++)
+            {
+                Playertanks[i] = new PlayerTank(opponents[i], playerpos[i], terrain.TankYPosition(playerpos[i]), this);
+            }
+
+            //Initialising the wind speed, another private field of Gameplay, to a random number between -100 and 100.
+            //Creating a new BattleForm and Show()ing it.
+            BattleForm BF = new BattleForm(this);
+            BF.Show();
         }
 
         public Battlefield GetMap()
         {
-            throw new NotImplementedException();
         }
 
         public void DrawTanks(Graphics graphics, Size displaySize)
         {
+            //for loop
             throw new NotImplementedException();
         }
 
@@ -232,7 +264,9 @@ public void CommenceGame()
         
         public int WindSpeed()
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            int wind = rnd.Next(-100, 100);
+            return wind;
         }
     }
 }

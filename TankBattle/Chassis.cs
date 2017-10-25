@@ -103,7 +103,7 @@ namespace TankBattle
 
         public override int GetTankHealth()
         {
-            throw new NotImplementedException();
+            return 100;
         }
 
         public override void WeaponLaunch(int weapon, PlayerTank playerTank, Gameplay currentGame)
@@ -113,7 +113,7 @@ namespace TankBattle
 
         public override string[] Weapons()
         {
-            throw new NotImplementedException();
+            return new string[] { "Standard Shell" };
         }
     }
 }
