@@ -9,8 +9,22 @@ namespace TankBattle
 {
     public class PlayerTank
     {
+        private int TX, TY, THealth;
+        private Chassis chas;
+        private PlayerTank playerTank;
+        private int angle, current_weapon, currentplayer;
+        private float power;
         public PlayerTank(Opponent player, int tankX, int tankY, Gameplay game)
-        {
+        { /*
+            Color colour = Gameplay.GetColour(currentplayer) ;
+            TX = tankX;
+            TY = tankY;
+            chas = GetTank();
+            THealth = playerTank.GetTank().GetTankHealth();
+            angle = 0;
+            power = 25;
+            current_weapon = 0;
+            */
             throw new NotImplementedException();
         }
 
