@@ -15,7 +15,7 @@ namespace TankBattle
         List<WeaponEffect> Weapon;
         private Opponent[] opponents;
         private int current_round;
-        private Opponent startingplayer;
+        private int startingplayer;
         private Opponent currentplayer;
         private Battlefield map;
         private int[] playerpos;
@@ -121,8 +121,12 @@ namespace TankBattle
             {
                 return h;
             } else
+            if (playerNum == 0)
             {
                 return Color.Black;
+            } else
+            {
+                return Color.PaleGoldenrod;
             }
                 
             
@@ -159,14 +163,14 @@ namespace TankBattle
         public void CommenceGame()
         {
             current_round = 1;
-            startingplayer = opponents[0];
+            startingplayer = 0;
             BeginRound();
         }
 
         public void BeginRound()
         {
             //Initialising a private field of Gameplay representing the current player to the value of the starting Opponent field(see CommenceGame).
-            currentplayer = startingplayer;
+            currentplayer = opponents[startingplayer];
             //Creating a new Battlefield, which is also stored as a private field of Gameplay.
             map = new Battlefield();
             //Creating an array of Opponent positions by calling GetPlayerPositions with the number of Opponents playing the game(hint: get the length of the Opponents array
@@ -179,19 +183,18 @@ namespace TankBattle
             //Shuffling that array of positions with the RandomReorder method.
             RandomReorder(playerpos);
             //Creating an array of PlayerTank as a private field.There should be the same number of PlayerTanks as there are Opponents in the Opponent array.
-            Playertanks = new PlayerTank[opponents.Length + 1];
+            Playertanks = new PlayerTank[opponents.Length];
 
             //Initialising the array of PlayerTank by finding the horizontal position of the PlayerTank
             //(by looking up the appropriate index of the array returned by GetPlayerPositions and shuffled with the RandomReorder method)
 
             //the vertical position of the PlayerTank(by calling TankYPosition() on the Battlefield with the horizontal position as an argument)
             //and then calling PlayerTank's constructor to create that PlayerTank (passing in the appropriate Opponent, the horizontal position, the vertical position and a reference to this)
-
             for (int i = 0; i < playerpos.Length; i++)
             {
                 Playertanks[i] = new PlayerTank(opponents[i], playerpos[i], map.TankYPosition(playerpos[i]), this);
             }
-
+            
             //Initialising the wind speed, another private field of Gameplay, to a random number between -100 and 100.
             WindSpeed();
             //Creating a new BattleForm and Show()ing it.
@@ -218,8 +221,10 @@ namespace TankBattle
         {
             //This method returns the PlayerTank associated with the current player.
             //Both the current player and an array of PlayerTank are private fields of Gameplay and are also initialised in BeginRound().
-            //return Playertanks[currentplayer];
-            throw new NotImplementedException();
+            return Playertanks[startingplayer];
+
+//            throw new NotImplementedException();
+
         }
 
         public void AddEffect(WeaponEffect weaponEffect)
