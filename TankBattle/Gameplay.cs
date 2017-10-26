@@ -179,13 +179,14 @@ namespace TankBattle
             //Shuffling that array of positions with the RandomReorder method.
             RandomReorder(playerpos);
             //Creating an array of PlayerTank as a private field.There should be the same number of PlayerTanks as there are Opponents in the Opponent array.
-            Playertanks = new PlayerTank[opponents.Length];
+            Playertanks = new PlayerTank[opponents.Length + 1];
 
             //Initialising the array of PlayerTank by finding the horizontal position of the PlayerTank
             //(by looking up the appropriate index of the array returned by GetPlayerPositions and shuffled with the RandomReorder method)
 
             //the vertical position of the PlayerTank(by calling TankYPosition() on the Battlefield with the horizontal position as an argument)
             //and then calling PlayerTank's constructor to create that PlayerTank (passing in the appropriate Opponent, the horizontal position, the vertical position and a reference to this)
+
             for (int i = 0; i < playerpos.Length; i++)
             {
                 Playertanks[i] = new PlayerTank(opponents[i], playerpos[i], map.TankYPosition(playerpos[i]), this);
@@ -268,7 +269,7 @@ namespace TankBattle
 
         public void NextRound()
         {
-            throw new NotImplementedException();
+            current_round++;
         }
         
         public int WindSpeed()

@@ -6,133 +6,133 @@ using System.Threading.Tasks;
 
 namespace TankBattle
 {
-    
+
     public class Battlefield
     {
         public const int WIDTH = 160;
         public const int HEIGHT = 120;
-        bool[,] terrain = new bool[Battlefield.HEIGHT, Battlefield.WIDTH];
+        bool[,] terrain = new bool[Battlefield.WIDTH, Battlefield.HEIGHT];
+       
 
         public Battlefield()
         {
-            for (int y = 3; y < Battlefield.HEIGHT - 1; y++)
+            Random rnd = new Random();
+            for (int x = 0; x < Battlefield.WIDTH - 1; x++)
             {
-                for (int x = 0; x < Battlefield.WIDTH - 1; x++)
+                terrain[x, Battlefield.HEIGHT - 1] = true;
+            }
+            for (int x = 0; x < Battlefield.WIDTH - 1; x++)
+            {
+                for (int y = Battlefield.HEIGHT - 2; y > 0; y--)
                 {
-
-                    //random true or false and if true below
-                    Random rnd = new Random();
-                    bool tile = rnd.Next(0, 100) % 2 == 0;
-                    if (tile == false)
-                    {
-                        terrain[y, x] = tile;
-                    }
-                    if (terrain[y - 1, x] == true)
-                    {
-                        terrain[y, x] = tile;
-                    }
+                    terrain[x, y] = true;
                 }
             }
             for (int y = 0; y < 3; y++)
             {
                 for (int x = 0; x < Battlefield.WIDTH - 1; x++)
                 {
-                    terrain[y, x] = false;
+                    terrain[x, y] = false;
                 }
             }
-            for (int x = 0; x < Battlefield.WIDTH - 1; x++)
+            for (int d = 0; d < 100; d++)
             {
-                terrain[Battlefield.HEIGHT - 1, x] = true;
+                TerrainDestruction(rnd.Next(30, 100), rnd.Next(30, 140), rnd.Next(3, 10));
             }
+
+            while (CalculateGravity())
+            {
+                CalculateGravity();
+
+            }
+
         }
 
         public bool IsTileAt(int x, int y)
         {
-            bool result = false;
-            if (terrain[y,x] == true)
-            {
-                result = true;
-            } else if (terrain[y,x] == false)
-            {
-                result = false;
-            }
-            return result;
+            return terrain[x, y];
         }
 
         public bool TankFits(int x, int y)
-        { 
-            bool result = false;
-            for (int ex = 0; ex<Chassis.WIDTH; ex++)
-            {
-                for (int ey = 0; ey<Chassis.HEIGHT; ey++)
-                {
-                    if (terrain[y + ey, x + ex] == true)
-                    {
-                        result = true;
-                        return result;
-                    }
-}
-            }
-            return result;
-        }
-
-        public int TankYPosition(int x)
         {
-            bool grounded = false;
-            int ey = 0;
-            while (!grounded)
+            for (int ex = 0; ex < Chassis.WIDTH; ex++)
             {
-                if (terrain[ey, x] == false)
+                for (int ey = 0; ey < Chassis.HEIGHT; ey++)
                 {
-                    ey++;
-                }
-                else if (terrain[ey, x] == true)
-                {
-                    grounded = true;
-                }
-            }
-            return ey - Chassis.HEIGHT;
-        }
-
-        public void TerrainDestruction(float destroyX, float destroyY, float radius)
-        {
-            double dist;
-            for (int y = 0; y < Battlefield.HEIGHT; y++)
-            {
-                for (int x = 0; x < Battlefield.WIDTH; x++)
-                {
-                    //distance between x and y
-                    float csqrt = x * x + y * y;
-                    dist = Math.Sqrt(csqrt);
-                    if ( dist >= radius)
+                    if (terrain[x + ex, y + ey] == true)
                     {
-                        terrain[y, x] = false;
-                    }
-                }
-            }
-        }
-
-        public bool CalculateGravity()
-        {
-            for (int y = 0; y < Battlefield.HEIGHT; y++)
-            {
-                for (int x = 0; x < Battlefield.WIDTH; y++)
-                {
-                    if (terrain[y,x] == true)
-                    {
-                        if (terrain[y+1,x] == false)
-                        {
-                            terrain[y, x] = false;
-                            terrain[y + 1, x] = true;
-                            return true;
-                        } else if (terrain[y+1,x] == true)
-                        {
-                            return false;
-                        }
+                        return true;
                     }
                 }
             }
             return false;
         }
+
+        public int TankYPosition(int x)
+        {
+            int lowPoint = 0;
+            for (int y = 0; y <= HEIGHT - Chassis.HEIGHT; y++)
+            {
+                int hitTiles = 0;
+                for (int ChasY = 0; ChasY < Chassis.HEIGHT; ChasY++)
+                {
+                    for (int ChasX = 0; ChasX < Chassis.WIDTH; ChasX++)
+                    {
+                        if(IsTileAt(x + ChasX, y + ChasY))
+                        {
+                            hitTiles++;
+                        }
+                    }
+                    
+                }
+                if (hitTiles == 0)
+                {
+                    lowPoint = y;
+                }
+            }
+            return lowPoint;
+        }
+            
+
+        
+        public void TerrainDestruction(float destroyX, float destroyY, float radius)
+        {
+            float dist = 0
+                ;
+            for (int y = 0; y < HEIGHT; y++)
+            {
+                for (int x = 0; x < WIDTH; x++)
+                {
+                    //distance between x and y
+                    float DX = x - destroyX;
+                    float DY = y- destroyY;
+                    float csqrt = DX * DX + DY * DY;
+                    dist = (float)Math.Sqrt(csqrt);
+                    if (dist < radius)
+                    {
+                        terrain[x, y] = false;
+                    }
+                }
+            }
+        }
+        bool tile_moved;
+        public bool CalculateGravity()
+        {
+            tile_moved = false;
+            for (int x = 0; x < WIDTH; x++)
+            {
+                for (int y = HEIGHT - 2; y > 0; y--)
+                {
+                    if (IsTileAt(x, y) && (!IsTileAt(x, y + 1)))
+                    {
+                        terrain[x, y] = false;
+                        terrain[x, y + 1] = true;
+                        tile_moved = true;
+
+                    }
+                }
+            }
+            return tile_moved;
+        } 
     }
 }
