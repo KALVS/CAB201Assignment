@@ -9,52 +9,69 @@ namespace TankBattle
 {
     public class PlayerTank
     {
-        private int TX, TY, THealth;
-        private Chassis chas;
-        private PlayerTank playerTank;
-        private int angle, current_weapon, currentplayer;
+        private Opponent current_player;
+        private Gameplay current_game;
+        private Chassis current_chassis;
+        private int TX, TY, THealth, angle, current_weapon;
         private float power;
+        private Bitmap current_tank;
+        int armour;
         public PlayerTank(Opponent player, int tankX, int tankY, Gameplay game)
-        { /*
-            Color colour = Gameplay.GetColour(currentplayer) ;
+        {
+            //Alex Holm N9918205
             TX = tankX;
             TY = tankY;
-            chas = GetTank();
-            THealth = playerTank.GetTank().GetTankHealth();
+            current_player = player;
+            current_game = game;
+            current_chassis = current_player.GetTank();
+            THealth = current_chassis.GetTankHealth();
             angle = 0;
             power = 25;
             current_weapon = 0;
-            */
-            throw new NotImplementedException();
+            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), angle);
+            
         }
 
         public Opponent GetPlayer()
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            return current_player;
         }
         public Chassis GetTank()
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            return current_player.GetTank();
         }
 
         public float GetAngle()
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            return angle;
         }
 
         public void AimTurret(float angle)
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), GetAngle());
         }
 
         public int GetPower()
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            if (power < 0.5)
+            {
+                power = 0.5f;
+            } else if (power > 100)
+            {
+                power = 100;
+            }
+            return (int)power;
         }
 
         public void SetForce(int power)
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            int current_velocity = power;
         }
 
         public int GetPlayerWeapon()
@@ -68,16 +85,30 @@ namespace TankBattle
 
         public void Render(Graphics graphics, Size displaySize)
         {
-            throw new NotImplementedException();
+            int drawX1 = displaySize.Width * TX / Battlefield.WIDTH;
+            int drawY1 = displaySize.Height * TY / Battlefield.HEIGHT;
+            int drawX2 = displaySize.Width * (TX + Chassis.WIDTH) / Battlefield.WIDTH;
+            int drawY2 = displaySize.Height * (TY + Chassis.HEIGHT) / Battlefield.HEIGHT;
+            graphics.DrawImage(current_tank, new Rectangle(drawX1, drawY1, drawX2 - drawX1, drawY2 - drawY1));
+
+            int drawY3 = displaySize.Height * (TY - Chassis.HEIGHT) / Battlefield.HEIGHT;
+            Font font = new Font("Arial", 8);
+            Brush brush = new SolidBrush(Color.White);
+
+            int pct = armour * 100 / THealth;
+            if (pct < 100)
+            {
+                graphics.DrawString(pct + "%", font, brush, new Point(drawX1, drawY3));
+            }
         }
 
         public int XPos()
         {
-            throw new NotImplementedException();
+            return TX;
         }
         public int GetY()
         {
-            throw new NotImplementedException();
+            return TY;
         }
 
         public void Attack()

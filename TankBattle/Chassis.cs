@@ -18,6 +18,7 @@ namespace TankBattle
 
         public static void LineDraw(int[,] graphic, int X1, int Y1, int X2, int Y2)
         {
+            //Alex Holme N99128205
             int dx = Math.Abs(X2 - X1), sx = X1 < X2 ? 1 : -1;
             int dy = Math.Abs(Y2 - Y1), sy = Y1 < Y2 ? 1 : -1;
             int err = (dx > dy ? dx : -dy) / 2, e2;
@@ -96,7 +97,7 @@ namespace TankBattle
     {
         public override int[,] DrawTankSprite(float angle)
         {
-
+            //Alex Holme N9918205
             int[,] graphic = {
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -151,11 +152,13 @@ namespace TankBattle
 
         public override int GetTankHealth()
         {
+            //Alex Holme N9918205
             return 100;
         }
 
         public override void WeaponLaunch(int weapon, PlayerTank playerTank, Gameplay currentGame)
         {
+            //Alex Holm N9918205
             float x = (float)(playerTank.XPos() + Chassis.WIDTH/2);
             float y = (float)(playerTank.GetY() + Chassis.HEIGHT/2);
             Opponent player = playerTank.GetPlayer();
@@ -167,6 +170,7 @@ namespace TankBattle
 
         public override string[] Weapons()
         {
+            //Alex Holm N9918205
             return new string[] { "Standard Shell" };
         }
     }
