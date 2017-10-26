@@ -18,18 +18,20 @@ namespace TankBattle
 
         public static void LineDraw(int[,] graphic, int X1, int Y1, int X2, int Y2)
         {
-            int dx = X2 - X1;
-            int dy = Y2 - Y1;
-            int y;
-            for (int x = 0; x < (X1 - X2 + 1); x++)
+            int dx = Math.Abs(X2 - X1), sx = X1 < X2 ? 1 : -1;
+            int dy = Math.Abs(Y2 - Y1), sy = Y1 < Y2 ? 1 : -1;
+            int err = (dx > dy ? dx : -dy) / 2, e2;
+            for (;;)
             {
-                y = Y1 + dy * (x - X1) / dx;
-                graphic[y, x] = 1;
-
+                graphic[X1, Y1] = 1;
+                if (X1 == X2 && Y1 == Y2) break;
+                e2 = err;
+                if (e2 > -dx) { err -= dy; X1 += sx; }
+                if (e2 < dy) { err += dx; Y1 += sy; }
             }
-        
-        }
 
+        }
+        
         public Bitmap CreateTankBitmap(Color tankColour, float angle)
         {
             int[,] tankGraphic = DrawTankSprite(angle);
@@ -85,25 +87,12 @@ namespace TankBattle
 
         public static Chassis GetTank(int tankNumber)
         {
-            /*
-            This is a factory method, used to create a new object of a concrete class that inherits
-            from Chassis and return it.
-            This way different parts of the program can create a variety of different tanks
-            without having to know anything about your concrete class.
-
-            If you only have one type of tank your method can simply be something like:
-
-            return new MyTank();
-
-            If you have multiple varieties of tank,
-            you will want to return a specific type of tank based on the value of tankNumber.
-            The unit tests assume that tank numbers start at 1.*/
-            return new CreateTank();
+            return new MakeTank();
         }
 
     }
 
-    public class CreateTank : Chassis
+    public class MakeTank : Chassis
     {
         public override int[,] DrawTankSprite(float angle)
         {
@@ -122,17 +111,7 @@ namespace TankBattle
                    { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
             };
-            if (angle < -67.5)
-            {
-                LineDraw(graphic, 6, 7, 6, 2);
-            }
-            if (angle >= -67.5)
-            {
-                if (angle < -22.5)
-                {
-                    LineDraw(graphic, 6, 7, 2, 3);
-                }
-            }
+            //If turret is upright
             if (angle >= -22.5)
             {
                 if (angle < 22.5)
@@ -140,6 +119,25 @@ namespace TankBattle
                     LineDraw(graphic, 7, 6, 7, 1);
                 }
             }
+            //If turret is Left
+            if (angle < -67.5)
+            {
+                LineDraw(graphic, 7, 6, 2, 6);
+            }
+            //If Turret is right
+            if (angle >= 67.5)
+            {
+                LineDraw(graphic, 7, 6, 12, 6);
+            }
+            //Angled to the left
+            if (angle >= -67.5)
+            {
+                if (angle < -22.5)
+                {
+                    LineDraw(graphic, 7, 6, 3, 2);
+                }
+            }
+            //Angled to the right
             if (angle >= 22.5)
             {
                 if (angle < 67.5)
@@ -147,10 +145,7 @@ namespace TankBattle
                     LineDraw(graphic, 7, 6, 1, 2);
                 }
             }
-            if (angle >= 67.5)
-            {
-                LineDraw(graphic, 7, 6, 11, 6);
-            }
+
             return graphic;
         }
 
