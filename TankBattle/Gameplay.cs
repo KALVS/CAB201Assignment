@@ -17,7 +17,7 @@ namespace TankBattle
         private int current_round;
         private Opponent startingplayer;
         private Opponent currentplayer;
-        private Battlefield map;
+        private Battlefield terrain;
         private int[] playerpos;
         private PlayerTank[] Playertanks;
         private int wind;
@@ -75,7 +75,7 @@ namespace TankBattle
 
         public PlayerTank PlayerTank(int playerNum)
         {
-            return Playertanks[numberOfPlayers - 1];
+            throw new NotImplementedException();
         }
 
         public static Color GetColour(int playerNum)
@@ -156,7 +156,7 @@ namespace TankBattle
             }
         }
 
-        public void CommenceGame()
+public void CommenceGame()
         {
             current_round = 1;
             startingplayer = opponents[0];
@@ -168,7 +168,7 @@ namespace TankBattle
             //Initialising a private field of Gameplay representing the current player to the value of the starting Opponent field(see CommenceGame).
             currentplayer = startingplayer;
             //Creating a new Battlefield, which is also stored as a private field of Gameplay.
-            map = new Battlefield();
+            terrain = new Battlefield();
             //Creating an array of Opponent positions by calling GetPlayerPositions with the number of Opponents playing the game(hint: get the length of the Opponents array
             playerpos = GetPlayerPositions(opponents.Length);
             //Looping through each Opponent and calling its StartRound method.
@@ -188,7 +188,7 @@ namespace TankBattle
             //and then calling PlayerTank's constructor to create that PlayerTank (passing in the appropriate Opponent, the horizontal position, the vertical position and a reference to this)
             for (int i = 0; i < playerpos.Length; i++)
             {
-                Playertanks[i] = new PlayerTank(opponents[i], playerpos[i], map.TankYPosition(playerpos[i]), this);
+                Playertanks[i] = new PlayerTank(opponents[i], playerpos[i], terrain.TankYPosition(playerpos[i]), this);
             }
 
             //Initialising the wind speed, another private field of Gameplay, to a random number between -100 and 100.
@@ -200,24 +200,17 @@ namespace TankBattle
 
         public Battlefield GetMap()
         {
-            return map;
+            return terrain;
         }
 
         public void DrawTanks(Graphics graphics, Size displaySize)
         {
             //for loop
-            /*  for (int i = 0; i < Playertanks.Length; i++)
-              {
-                  if (Playertanks[i]  ){ }
-              }*/
             throw new NotImplementedException();
         }
 
         public PlayerTank GetCurrentPlayerTank()
         {
-            //This method returns the PlayerTank associated with the current player.
-            //Both the current player and an array of PlayerTank are private fields of Gameplay and are also initialised in BeginRound().
-            //return Playertanks[currentplayer];
             throw new NotImplementedException();
         }
 
