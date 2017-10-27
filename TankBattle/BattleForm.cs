@@ -98,13 +98,15 @@ namespace TankBattle
         public void EnableTankButtons()
         {
             throw new NotImplementedException();
-            //Human.BeginTurn();
+            
             
         }
 
         public void AimTurret(float angle)
         {
             throw new NotImplementedException();
+            
+            
         }
 
         public void SetForce(int power)
