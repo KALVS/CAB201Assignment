@@ -12,7 +12,9 @@ namespace TankBattle
         private Opponent current_player;
         private Gameplay current_game;
         private Chassis current_chassis;
-        private int TX, TY, THealth, angle, current_weapon, current_velocity;
+        private PlayerTank current_playerTank;
+        private BattleForm BF;
+        private int TX, TY, startingArmour, angle, current_weapon, current_velocity;
         private float power;
         private Bitmap current_tank;
         private int armour;
@@ -24,11 +26,11 @@ namespace TankBattle
             current_player = player;
             current_game = game;
             current_chassis = current_player.GetTank();
-            THealth = current_chassis.GetTankHealth();
+            startingArmour = current_chassis.GetTankHealth();
             angle = 0;
             power = 25;
             current_weapon = 0;
-            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), angle);
+            AimTurret(GetAngle());
             armour = current_chassis.GetTankHealth();
         }
 
@@ -52,7 +54,7 @@ namespace TankBattle
         public void AimTurret(float angle)
         {
             //Alex Holm N9918205
-            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), GetAngle());
+            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), angle);
         }
 
         public int GetPower()
@@ -96,7 +98,7 @@ namespace TankBattle
             Font font = new Font("Arial", 8);
             Brush brush = new SolidBrush(Color.White);
 
-            int pct = armour * 100 / THealth;
+            int pct = armour * 100 / startingArmour;
             if (pct < 100)
             {
                 graphics.DrawString(pct + "%", font, brush, new Point(drawX1, drawY3));
@@ -116,12 +118,15 @@ namespace TankBattle
 
         public void Attack()
         {
-            current_game.GetCurrentPlayerTank().Attack();
-            //Disables Control Panel
-            //Enables Timer
- 
-            throw new NotImplementedException();
-            
+            // This causes the PlayerTank to fire its current weapon
+            //.This method should call its own GetTank() method,
+            // then call WeaponLaunch() on that Chassis,
+            // passing in the current weapon, 
+            //the this reference and the private Gameplay field of PlayerTank.
+            GetTank().WeaponLaunch(current_weapon, current_playerTank, this.current_game);
+
+
+
         }
 
         public void DamagePlayer(int damageAmount)

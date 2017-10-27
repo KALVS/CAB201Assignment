@@ -13,14 +13,18 @@ namespace TankBattle
 {
     public partial class BattleForm : Form
     {
-
-        private System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         private Color landscapeColour;
+        Random rnd = new Random();
         private Random rng = new Random();
-        private Image backgroundImage = null;
+        private Image backgroundImage;
         private int levelWidth = 160;
         private int levelHeight = 120;
+
+        private Timer myTimer = new Timer();
         private Gameplay currentGame;
+        private Opponent current_player;
+        private Chassis current_tank;
+        private PlayerTank current_playerTank;
         int second_call = 0;
 
         private BufferedGraphics backgroundGraphics;
@@ -38,6 +42,7 @@ namespace TankBattle
                                      Color.FromArgb(255, 133, 119, 109) };
 
 
+
         public BattleForm(Gameplay game)
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -50,36 +55,63 @@ namespace TankBattle
             currentGame = game;
 
             // Generate random numbers between 0-3
-            Random rnd = new Random();
             int i = rnd.Next(0, 3);
 
             // Select a landscape colour based upon the background image
             landscapeColour = landscapeColours[i];
             backgroundImage = Image.FromFile(imageFilenames[i]);
-           
+
             InitializeComponent();
 
+            myTimer.Interval = (20);
 
-            InitDisplayBuffer();
-            InitDisplayBuffer();
 
+
+            backgroundGraphics =  InitDisplayBuffer();
+            gameplayGraphics = InitDisplayBuffer();
+            
+            //These
             DrawBackground();
-
+            //THREE
             DrawGameplay();
+            //BASTARDS
             NewTurn();
+            //Are the reason Commence isnt working.
         }
 
 
         private void DrawGameplay()
         {
-
-            throw new NotImplementedException();
+            backgroundGraphics.Render(gameplayGraphics.Graphics);
+            currentGame.DrawTanks(gameplayGraphics.Graphics, displayPanel.Size);
+            currentGame.DisplayEffects(gameplayGraphics.Graphics, displayPanel.Size);
         }
+
 
         private void NewTurn()
         {
-            throw new NotImplementedException();
-
+            //<Summary>
+            //Alex Holm
+            //</Summary>
+            
+            currentGame.GetCurrentPlayerTank();
+            current_playerTank.GetPlayer();
+            string Title = ("Tank Battle - Round " + currentGame.CurrentRound() + " of " + currentGame.GetMaxRounds());
+            this.Text = Title;
+            controlPanel.BackColor = current_player.GetColour();
+            PlayerLabel.Text = current_playerTank.GetPlayer().ToString();
+            AimTurret(current_playerTank.GetAngle());
+            SetForce(current_playerTank.GetPower());
+            Wind.Text = currentGame.WindSpeed().ToString();
+            weaponComboBox.SelectedIndex = -1;
+            current_playerTank.GetTank().Weapons();
+            for (int i = 0; i < current_tank.Weapons().Count(); i++)
+            {
+                weaponComboBox.Items.Add(current_tank.Weapons()[i]);
+            }
+            ChangeWeapon(current_playerTank.GetPlayerWeapon());
+            current_player.BeginTurn(this, currentGame);
+            
         }
 
 
@@ -97,32 +129,28 @@ namespace TankBattle
         public void EnableTankButtons()
         {
             controlPanel.Enabled = true;
-            
-            
         }
 
         public void AimTurret(float angle)
-        {/*
-         for (int i = 0; i < angle;i++)
-            {
-                Upd
-            }
-         */
-            throw new NotImplementedException();
+        {
+            angle = (float)AngleNumericUpDown.Value;
         }
 
         public void SetForce(int power)
         {
-            throw new NotImplementedException();
+            power = (int)PowerBar.Value;
         }
         public void ChangeWeapon(int weapon)
         {
-            throw new NotImplementedException();
+            weapon = (int)weaponComboBox.SelectedValue;
         }
 
         public void Attack()
         {
-            throw new NotImplementedException();
+            currentGame.GetCurrentPlayerTank().Attack();
+            controlPanel.Enabled = false;
+            myTimer.Start();
+
         }
 
         private void DrawBackground()
@@ -156,11 +184,6 @@ namespace TankBattle
             Graphics graphics = displayPanel.CreateGraphics();
             Rectangle dimensions = new Rectangle(0, 0, displayPanel.Width, displayPanel.Height);
             BufferedGraphics bufferedGraphics = context.Allocate(graphics, dimensions);
-            if (second_call != 0)
-            {
-                return gameplayGraphics;
-            }
-            second_call++;
             return bufferedGraphics;
         }
 
@@ -173,6 +196,64 @@ namespace TankBattle
         private void controlPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+        //The methods tied to each of these events should call the appropriate PlayerTank method (AimTurret(), SetForce(), ChangeWeapon()).
+        private void AngleNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            AimTurret((int)AngleNumericUpDown.Value);
+            DrawGameplay();
+            displayPanel.Invalidate();
+        }
+
+        private void PowerBar_Scroll(object sender, EventArgs e)
+        {
+            PowerIndicatorLabel.Text = PowerBar.Value.ToString();
+            SetForce(PowerBar.Value);
+            DrawGameplay();
+            displayPanel.Invalidate();
+        }
+
+        private void weaponComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeWeapon(weaponComboBox.SelectedIndex);
+
+        }
+
+        //Finally, create a Tick event for[ the Timer that you created earlier. A fair bit of logic needs to go into this Tick event as it is responsible for handling much of the animation and physics logic:
+        private void TimerEventProcessor()
+        {
+            if (!currentGame.ProcessWeaponEffects())
+            {
+                currentGame.CalculateGravity();
+                DrawBackground();
+                DrawGameplay();
+                displayPanel.Invalidate();
+
+                if (currentGame.CalculateGravity())
+                {
+                    return;
+                }
+                if (!currentGame.CalculateGravity())
+                {
+                    myTimer.Enabled = false;
+
+                    if (currentGame.TurnOver())
+                    {
+                        NewTurn();
+                    }
+                    else
+                    {
+                        Dispose();
+                        currentGame.NextRound();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                DrawGameplay(); displayPanel.Invalidate();
+                return;
+            }
         }
     }
 }
