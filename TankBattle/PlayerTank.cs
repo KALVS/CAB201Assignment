@@ -114,6 +114,8 @@ namespace TankBattle
         public void Attack()
         {
             throw new NotImplementedException();
+            GetTank();
+            // DOESN'T WORK **** current_chassis.WeaponLaunch(current_weapon, this, );
         }
 
         public void DamagePlayer(int damageAmount)
