@@ -116,10 +116,16 @@ namespace TankBattle
 
         public void Attack()
         {
+<<<<<<< HEAD
             current_game.GetCurrentPlayerTank().Attack();
             //Disables Control Panel
             //Enables Timer
             
+=======
+            throw new NotImplementedException();
+            GetTank();
+            // DOESN'T WORK **** current_chassis.WeaponLaunch(current_weapon, this, );
+>>>>>>> 8f78a300f43338e07dc4c0d4e4c9080d1065e6d2
         }
 
         public void DamagePlayer(int damageAmount)
