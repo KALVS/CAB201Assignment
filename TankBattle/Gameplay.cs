@@ -21,6 +21,7 @@ namespace TankBattle
         private int[] playerpos;
         private PlayerTank[] Playertanks;
         private int wind;
+        Random rnd = new Random();
 
         public Gameplay(int numPlayers, int numRounds)
         {
@@ -311,12 +312,38 @@ namespace TankBattle
 
         public bool TurnOver()
         {
-            throw new NotImplementedException();
+            bool result = true;
+            int players_alive = 0;
+            for (int i = 0; i < opponents.Length; i++)
+            {
+                if (Playertanks[i].Alive())
+                {
+                    players_alive++;
+                }
+            }
+            if (players_alive >= 2)
+            {
+                wind = wind + rnd.Next(-10, 10);
+                result = true;
+            }
+            else if (players_alive == 0 || players_alive == 1)
+            {
+                ScoreWinner();
+                result = false;
+                
+            }
+                return result;
         }
 
         public void ScoreWinner()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < opponents.Length; i++)
+            {
+                if (Playertanks[i].Alive())
+                {
+                    opponents[i].AddScore();
+                }
+            }
         }
 
         public void NextRound()
