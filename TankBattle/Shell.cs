@@ -14,7 +14,15 @@ namespace TankBattle
 
         public Shell(float x, float y, float angle, float power, float gravity, Shrapnel explosion, Opponent player)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+
+            float angleRadians = (90 - angle) * (float)Math.PI / 180;
+
+            float magnitude = power / 50;
+
+            float xVelocity = (float)Math.Cos(angleRadians) * magnitude;
+            float yVelocity = (float)Math.Sin(angleRadians) * -magnitude;
         }
 
         public override void Step()
