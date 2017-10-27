@@ -15,7 +15,7 @@ namespace TankBattle
         private int TX, TY, THealth, angle, current_weapon, current_velocity;
         private float power;
         private Bitmap current_tank;
-        int armour;
+        private int armour;
         public PlayerTank(Opponent player, int tankX, int tankY, Gameplay game)
         {
             //Alex Holm N9918205
@@ -29,7 +29,7 @@ namespace TankBattle
             power = 25;
             current_weapon = 0;
             current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), angle);
-            
+            armour = current_chassis.GetTankHealth();
         }
 
         public Opponent GetPlayer()
@@ -135,10 +135,8 @@ namespace TankBattle
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            else { return false; }
+        
         }
 
         public bool CalculateGravity()
