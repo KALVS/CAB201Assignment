@@ -13,12 +13,15 @@ namespace TankBattle
 {
     public partial class BattleForm : Form
     {
+
+        private System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         private Color landscapeColour;
         private Random rng = new Random();
         private Image backgroundImage = null;
         private int levelWidth = 160;
         private int levelHeight = 120;
         private Gameplay currentGame;
+        int second_call;
 
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
@@ -49,19 +52,13 @@ namespace TankBattle
             // Generate random numbers between 0-3
             Random rnd = new Random();
             int i = rnd.Next(0, 3);
+
+            // Select a landscape colour based upon the background image
+            landscapeColour = landscapeColours[i];
             backgroundImage = Image.FromFile(imageFilenames[i]);
            
-            // Select a landscape colour based upon the background image
-            if (i < 3)
-            {
-                landscapeColour = landscapeColours[i];
-            } else
-            {
-                landscapeColour = landscapeColours[0];
-            }
-            
-
             InitializeComponent();
+
 
             InitDisplayBuffer();
             InitDisplayBuffer();
@@ -76,10 +73,12 @@ namespace TankBattle
         private void DrawGameplay()
         {
 
+            throw new NotImplementedException();
         }
 
         private void NewTurn()
         {
+            throw new NotImplementedException();
 
         }
 
@@ -154,6 +153,11 @@ namespace TankBattle
             Graphics graphics = displayPanel.CreateGraphics();
             Rectangle dimensions = new Rectangle(0, 0, displayPanel.Width, displayPanel.Height);
             BufferedGraphics bufferedGraphics = context.Allocate(graphics, dimensions);
+            if (second_call != 0)
+            {
+                return gameplayGraphics;
+            }
+            second_call++;
             return bufferedGraphics;
         }
 
