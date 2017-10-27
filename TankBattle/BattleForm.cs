@@ -21,7 +21,7 @@ namespace TankBattle
         private int levelWidth = 160;
         private int levelHeight = 120;
         private Gameplay currentGame;
-        int second_call;
+        int second_call = 0;
 
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
@@ -96,16 +96,19 @@ namespace TankBattle
 
         public void EnableTankButtons()
         {
-            throw new NotImplementedException();
+            controlPanel.Enabled = true;
             
             
         }
 
         public void AimTurret(float angle)
-        {
+        {/*
+         for (int i = 0; i < angle;i++)
+            {
+                Upd
+            }
+         */
             throw new NotImplementedException();
-            
-            
         }
 
         public void SetForce(int power)
@@ -165,6 +168,11 @@ namespace TankBattle
         {
             Graphics graphics = displayPanel.CreateGraphics();
             gameplayGraphics.Render(graphics);
+        }
+
+        private void controlPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
