@@ -23,18 +23,6 @@ namespace TankBattle
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
 
-        // Image array from which the background will be randomly selected
-        string[] imageFilenames = { "Images\\background1.jpg",
-                                    "Images\\background2.jpg",
-                                    "Images\\background3.jpg",
-                                    "Images\\background4.jpg" };
-        // Colour array from which the colour will be randomly selected
-        Color[] landscapeColours = { Color.FromArgb(255, 0, 0, 0),
-                                     Color.FromArgb(255, 73, 58, 47),
-                                     Color.FromArgb(255, 148, 116, 93),
-                                     Color.FromArgb(255, 133, 119, 109) };
-
-
         public BattleForm(Gameplay game)
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -43,46 +31,8 @@ namespace TankBattle
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
 
-            // Pass gamme into the function
-            currentGame = game;
-
-            // Generate random numbers between 0-3
-            Random rnd = new Random();
-            int i = rnd.Next(0, 3);
-            backgroundImage = Image.FromFile(imageFilenames[i]);
-           
-            // Select a landscape colour based upon the background image
-            if (i < 3)
-            {
-                landscapeColour = landscapeColours[i];
-            } else
-            {
-                landscapeColour = landscapeColours[0];
-            }
-            
-
             InitializeComponent();
-
-            InitDisplayBuffer();
-            InitDisplayBuffer();
-
-            DrawBackground();
-
-            DrawGameplay();
-            NewTurn();
         }
-
-
-        private void DrawGameplay()
-        {
-
-        }
-
-        private void NewTurn()
-        {
-
-        }
-
 
         // From https://stackoverflow.com/questions/13999781/tearing-in-my-animation-on-winforms-c-sharp
         protected override CreateParams CreateParams
@@ -98,8 +48,6 @@ namespace TankBattle
         public void EnableTankButtons()
         {
             throw new NotImplementedException();
-            //Human.BeginTurn();
-            
         }
 
         public void AimTurret(float angle)
