@@ -85,6 +85,7 @@ namespace TankBattle
 
         public void Render(Graphics graphics, Size displaySize)
         {
+            //Alex Holm N9918205
             int drawX1 = displaySize.Width * TX / Battlefield.WIDTH;
             int drawY1 = displaySize.Height * TY / Battlefield.HEIGHT;
             int drawX2 = displaySize.Width * (TX + Chassis.WIDTH) / Battlefield.WIDTH;
@@ -104,10 +105,12 @@ namespace TankBattle
 
         public int XPos()
         {
+            //Alex Holm N9918205
             return TX;
         }
         public int GetY()
         {
+            //Alex Holm N9918205
             return TY;
         }
 
