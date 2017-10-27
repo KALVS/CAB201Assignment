@@ -141,7 +141,36 @@ namespace TankBattle
 
         public bool CalculateGravity()
         {
-            throw new NotImplementedException();
+            /*<Summary> N9932798 Julian Shores
+             * The calculate gravity function takes multiple functions' output to return a result.
+             * Firstly it checks for the boolean result of the Alive() function, then reacting accordingly.
+             * Secondly it gets the map and checks to see if the tank fits. If not, false is returned.
+             * Falling damage is calculated, otherwise.
+             * Thridly the function does a check to see if the tank is still within the bounds of the screen.
+             * If not, the tank's armour is reduced to 0.
+             * </Summary>
+            */
+
+            if (Alive() == false)
+            {
+                return false;
+            }
+            current_game.GetMap();
+            if (current_game.GetMap().TankFits(TX, TY))
+            {
+                return false;
+            } else
+            {
+                TY += 1;
+                armour -= 1;
+            }
+
+            if (TY == Battlefield.HEIGHT - Chassis.HEIGHT)
+            {
+                armour = 0;
+            }
+            return true;
+
         }
     }
 }
