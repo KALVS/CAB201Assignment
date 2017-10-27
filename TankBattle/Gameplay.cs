@@ -12,7 +12,7 @@ namespace TankBattle
     {
         private int numberOfPlayers;
         private int numberOfRounds;
-        List<WeaponEffect> Weapon;
+        List<WeaponEffect> Weapon_effects;
         private Opponent[] opponents;
         private int current_round;
         private int startingplayer;
@@ -24,17 +24,23 @@ namespace TankBattle
 
         public Gameplay(int numPlayers, int numRounds)
         {
+            //<summary>
+            //Alex Holm N9918205
+            //</summary>
             this.numberOfPlayers = numPlayers;
             //Creates a numPlayers size array of Opponent(which is stored as a private field of Gameplay)
             this.opponents = new Opponent[numPlayers];
             //Sets another private field to the number of rounds that will be played
             this.numberOfRounds = numRounds;
             //Creates an array or list collection of WeaponEffect
-            Weapon = new List<WeaponEffect>();
+            Weapon_effects = new List<WeaponEffect>();
         }
 
         public int NumPlayers()
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             if (numberOfPlayers < 2)
             {
                 numberOfPlayers = 2;
@@ -47,12 +53,18 @@ namespace TankBattle
 
         public int CurrentRound()
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             current_round++;
             return current_round;
         }
 
         public int GetMaxRounds()
-        {
+        {   
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             if (numberOfRounds < 2)
             {
                 numberOfRounds = 2;
@@ -65,21 +77,33 @@ namespace TankBattle
 
         public void RegisterPlayer(int playerNum, Opponent player)
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             opponents[playerNum - 1] = player;
         }
 
         public Opponent GetPlayer(int playerNum)
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             return opponents[playerNum - 1];
         }
 
         public PlayerTank PlayerTank(int playerNum)
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             return Playertanks[numberOfPlayers - 1];
         }
 
         public static Color GetColour(int playerNum)
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             Color a = Color.AntiqueWhite;
             Color b = Color.Blue;
             Color c = Color.Crimson;
@@ -134,6 +158,9 @@ namespace TankBattle
 
         public static int[] GetPlayerPositions(int numPlayers)
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             int segments = numPlayers + 1;
             int dist = Battlefield.WIDTH / segments;
             int[] playerPositions = new int[numPlayers];
@@ -148,6 +175,9 @@ namespace TankBattle
 
         public static void RandomReorder(int[] array)
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             Random random = new Random();
             for (int i = 0; i < array.Length; i++)
             {
@@ -162,6 +192,9 @@ namespace TankBattle
 
         public void CommenceGame()
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
             current_round = 1;
             startingplayer = 0;
             BeginRound();
@@ -169,6 +202,10 @@ namespace TankBattle
 
         public void BeginRound()
         {
+            //<Summary>
+            //Alex Holm N9918205
+            //</summary>
+
             //Initialising a private field of Gameplay representing the current player to the value of the starting Opponent field(see CommenceGame).
             currentplayer = opponents[startingplayer];
             //Creating a new Battlefield, which is also stored as a private field of Gameplay.
@@ -209,27 +246,37 @@ namespace TankBattle
 
         public void DrawTanks(Graphics graphics, Size displaySize)
         {
-            //for loop
-            /*  for (int i = 0; i < Playertanks.Length; i++)
-              {
-                  if (Playertanks[i]  ){ }
-              }*/
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            //Loop over each PlayerTanks in the array.
+            for ( int i = 0; i < Playertanks.Length; i++)
+            {
+                //Check if a PlayerTank is still around by calling its Alive() method.
+                if (Playertanks[i].Alive())
+                {
+                    //If it is, call its Render() method, passing in graphics and displaySize.
+                    Playertanks[i].Render(graphics, displaySize);
+                }
+            }
+//If it is, call its Render() method, passing in graphics and displaySize.
+            //throw new NotImplementedException();
         }
 
         public PlayerTank GetCurrentPlayerTank()
         {
+            //Alex Holm N918205
             //This method returns the PlayerTank associated with the current player.
             //Both the current player and an array of PlayerTank are private fields of Gameplay and are also initialised in BeginRound().
             return Playertanks[startingplayer];
-
-//            throw new NotImplementedException();
+            
 
         }
 
         public void AddEffect(WeaponEffect weaponEffect)
         {
-            throw new NotImplementedException();
+            //Alex Holm N9918205
+            Weapon_effects.Add(weaponEffect);
+            //Record Current Game on Weapon Effect. Passing THIS into reference
+            weaponEffect.RecordCurrentGame(this);
         }
 
         public bool ProcessWeaponEffects()
