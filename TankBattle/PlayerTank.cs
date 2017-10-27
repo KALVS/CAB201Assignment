@@ -12,7 +12,7 @@ namespace TankBattle
         private Opponent current_player;
         private Gameplay current_game;
         private Chassis current_chassis;
-        private int TX, TY, THealth, angle, current_weapon;
+        private int TX, TY, THealth, angle, current_weapon, current_velocity;
         private float power;
         private Bitmap current_tank;
         int armour;
@@ -61,9 +61,9 @@ namespace TankBattle
             if (power < 0.5)
             {
                 power = 0.5f;
-            } else if (power > 100)
+            } else if (power > 100f)
             {
-                power = 100;
+                power = 100f;
             }
             return (int)power;
         }
@@ -71,7 +71,7 @@ namespace TankBattle
         public void SetForce(int power)
         {
             //Alex Holm N9918205
-            int current_velocity = power;
+            current_velocity = power;
         }
 
         public int GetPlayerWeapon()
@@ -116,17 +116,28 @@ namespace TankBattle
 
         public void Attack()
         {
-            throw new NotImplementedException();
+            current_game.GetCurrentPlayerTank().Attack();
+            //Disables Control Panel
+            //Enables Timer
+            
         }
 
         public void DamagePlayer(int damageAmount)
         {
-            throw new NotImplementedException();
+            armour = armour - damageAmount;
         }
 
         public bool Alive()
         {
-            throw new NotImplementedException();
+            if (armour > 0)
+            {
+                return true;
+            } else 
+            if (armour <= 0)
+            {
+                return false;
+            }
+            return false;
         }
 
         public bool CalculateGravity()

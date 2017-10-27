@@ -9,12 +9,23 @@ namespace TankBattle
 {
     public class Shell : WeaponEffect
     {
-
-        // THis is a test commit comment, please ignore and delete at some stage.
-
+        //These are private fields for the X, y, gravity, explosion and player fields for Shell function below
+        //Using S to represent Shell so Shell's X value and so on
+        private float Sx, Sy, Sgravity, SxVelocity, SyVelocity;
+        private Shrapnel Sexplosion;
+        private Opponent Splayer;
         public Shell(float x, float y, float angle, float power, float gravity, Shrapnel explosion, Opponent player)
         {
-            throw new NotImplementedException();
+            Sx = x;
+            Sy = y;
+            Sgravity = gravity;
+            float angleRadians = (90 - angle) * (float)Math.PI / 180;
+            float magnitude = power / 50;
+            SxVelocity = (float) Math.Cos(angleRadians) * magnitude;
+            SyVelocity = (float)Math.Sin(angleRadians) * -magnitude;
+
+
+
         }
 
         public override void Step()
