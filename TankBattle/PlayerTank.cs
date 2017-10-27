@@ -76,7 +76,7 @@ namespace TankBattle
 
         public int GetPlayerWeapon()
         {
-            throw new NotImplementedException();
+            return current_weapon;
         }
         public void ChangeWeapon(int newWeapon)
         {
@@ -116,16 +116,12 @@ namespace TankBattle
 
         public void Attack()
         {
-<<<<<<< HEAD
             current_game.GetCurrentPlayerTank().Attack();
             //Disables Control Panel
             //Enables Timer
-            
-=======
+ 
             throw new NotImplementedException();
-            GetTank();
-            // DOESN'T WORK **** current_chassis.WeaponLaunch(current_weapon, this, );
->>>>>>> 8f78a300f43338e07dc4c0d4e4c9080d1065e6d2
+            
         }
 
         public void DamagePlayer(int damageAmount)
@@ -138,12 +134,11 @@ namespace TankBattle
             if (armour > 0)
             {
                 return true;
-            } else 
-            if (armour <= 0)
+            }
+            else
             {
                 return false;
             }
-            return false;
         }
 
         public bool CalculateGravity()
