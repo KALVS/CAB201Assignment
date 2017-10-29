@@ -30,7 +30,6 @@ namespace TankBattle
                 if (e2 > -dx) { err -= dy; X1 += sx; }
                 if (e2 < dy) { err += dx; Y1 += sy; }
             }
-
         }
         
         public Bitmap CreateTankBitmap(Color tankColour, float angle)
@@ -146,7 +145,7 @@ namespace TankBattle
                     LineDraw(graphic, 7, 6, 1, 2);
                 }
             }
-
+            
             return graphic;
         }
 

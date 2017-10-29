@@ -13,6 +13,7 @@ namespace TankBattle
 {
     public partial class BattleForm : Form
     {
+        //Alex Holm N9918205
         private Color landscapeColour;
         Random rnd = new Random();
         private Random rng = new Random();
@@ -20,7 +21,7 @@ namespace TankBattle
         private int levelWidth = 160;
         private int levelHeight = 120;
 
-        private Timer myTimer = new Timer();
+        Timer myTimer = new Timer();
         private Gameplay currentGame;
         private Opponent current_player;
         private Chassis current_chassis;
@@ -45,6 +46,8 @@ namespace TankBattle
 
         public BattleForm(Gameplay game)
         {
+            //Begun Julain
+            //Completed and tested Alex Holm N9918205
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -70,18 +73,16 @@ namespace TankBattle
             backgroundGraphics =  InitDisplayBuffer();
             gameplayGraphics = InitDisplayBuffer();
             
-            //These
             DrawBackground();
-            //THREE
             DrawGameplay();
-            //BASTARDS
             NewTurn();
-            //Are the reason Commence isnt working.
         }
 
 
         private void DrawGameplay()
         {
+            //begun Julain
+            //Alex Holm N9918205
             backgroundGraphics.Render(gameplayGraphics.Graphics);
             currentGame.DrawTanks(gameplayGraphics.Graphics, displayPanel.Size);
             currentGame.DisplayEffects(gameplayGraphics.Graphics, displayPanel.Size);
@@ -91,7 +92,7 @@ namespace TankBattle
         private void NewTurn()
         {
             //<Summary>
-            //Alex Holm
+            //Alex Holm N9918205
             //</Summary>
             
             current_tank = currentGame.GetCurrentPlayerTank();
@@ -148,8 +149,8 @@ namespace TankBattle
 
         public void Attack()
         {
+            controlPanel.Enabled = false;
             currentGame.GetCurrentPlayerTank().Attack();
-            EnableTankButtons();
             myTimer.Start();
 
         }
@@ -209,7 +210,7 @@ namespace TankBattle
         private void PowerBar_Scroll(object sender, EventArgs e)
         {
             PowerIndicatorLabel.Text = PowerBar.Value.ToString();
-            SetForce(PowerBar.Value);
+            SetForce((int)PowerBar.Value);
             DrawGameplay();
             displayPanel.Invalidate();
         }
@@ -255,6 +256,12 @@ namespace TankBattle
                 DrawGameplay(); displayPanel.Invalidate();
                 return;
             }
+        }
+
+        private void FireButton_Click(object sender, EventArgs e)
+        {
+            controlPanel.Enabled = false;
+            Attack();
         }
     }
 }

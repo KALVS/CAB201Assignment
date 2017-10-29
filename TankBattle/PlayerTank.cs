@@ -13,11 +13,13 @@ namespace TankBattle
         private Gameplay current_game;
         private Chassis current_chassis;
         private PlayerTank current_playerTank;
-        private BattleForm BF;
-        private int TX, TY, startingArmour, current_weapon, current_velocity;
-        private float power, current_angle;
         private Bitmap current_tank;
+        private int TX, TY, startingArmour, current_weapon;
+        private float power, angle;
         private int armour;
+        private Color colour;
+
+
         public PlayerTank(Opponent player, int tankX, int tankY, Gameplay game)
         {
             //Alex Holm N9918205
@@ -27,12 +29,13 @@ namespace TankBattle
             current_game = game;
             current_chassis = current_player.GetTank();
             startingArmour = current_chassis.GetTankHealth();
-            current_angle = 0;
+            angle = 0;
             power = 25;
-            current_weapon = 0;
+            current_weapon = GetPlayerWeapon();
             AimTurret(GetAngle());
             armour = current_chassis.GetTankHealth();
-            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), current_angle);
+            colour = current_player.GetColour();
+            current_tank = current_chassis.CreateTankBitmap(colour, angle);
         }
 
         public Opponent GetPlayer()
@@ -49,14 +52,16 @@ namespace TankBattle
         public float GetAngle()
         {
             //Alex Holm N9918205
-            return current_angle;
+            //fix me
+            return angle;
         }
 
         public void AimTurret(float angle)
         {
             //Alex Holm N9918205
-            current_angle = angle;
-            //current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), current_angle);
+            this.angle = angle;
+            //this.colour = current_player.GetColour();
+            current_chassis.CreateTankBitmap(Color.Gainsboro, angle);
         }
 
         public int GetPower()
@@ -75,16 +80,22 @@ namespace TankBattle
         public void SetForce(int power)
         {
             //Alex Holm N9918205
-            current_velocity = power;
+            //fix me
+
+            
+
         }
 
         public int GetPlayerWeapon()
-        {
+        {   //Alex Holm N9918205
             return current_weapon;
         }
         public void ChangeWeapon(int newWeapon)
         {
-            current_playerTank.current_weapon = newWeapon;
+            //Fix me
+            //Alex Holm N9912805
+            current_playerTank = current_game.GetCurrentPlayerTank();
+            newWeapon = current_playerTank.current_weapon;
         }
 
         public void Render(Graphics graphics, Size displaySize)
@@ -120,6 +131,9 @@ namespace TankBattle
 
         public void Attack()
         {
+            //Alex HOlm N9918205
+            //Fix me 
+
             // This causes the PlayerTank to fire its current weapon
             //.This method should call its own GetTank() method,
             // then call WeaponLaunch() on that Chassis,
@@ -133,11 +147,13 @@ namespace TankBattle
 
         public void DamagePlayer(int damageAmount)
         {
+            //Alex Holm N9918205
             armour = armour - damageAmount;
         }
 
         public bool Alive()
         {
+            //Alex Holm N9918205
             if (armour > 0)
             {
                 return true;

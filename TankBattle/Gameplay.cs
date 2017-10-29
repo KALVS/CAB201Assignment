@@ -354,12 +354,43 @@ namespace TankBattle
 
         public void DamagePlayer(float damageX, float damageY, float explosionDamage, float radius)
         {
-            throw new NotImplementedException();
+            float damagedone = 0;
+            for (int i = 0; i < Playertanks.Length; i++)
+            {
+               if (Playertanks[i].Alive())
+                {
+                    int tankXcenter = Playertanks[i].XPos() + (Chassis.WIDTH / 2);
+                    int tankYcenter = Playertanks[i].GetY() + (Chassis.HEIGHT / 2);
+                    double distance = Math.Sqrt(Math.Pow(tankXcenter - damageY, 2) + Math.Pow(tankYcenter - damageY, 2));
+                    if (distance > radius) { }
+                    if (distance < radius && distance > radius / 2)
+                    {
+                        damagedone = explosionDamage * (radius - (float)distance) / radius;
+                    }
+                    if (distance < radius / 2)
+                    {
+                        damagedone = explosionDamage;
+                    }
+                    DamagePlayer(tankXcenter, tankYcenter, damagedone, radius);
+                }
+            }
         }
 
         public bool CalculateGravity()
         {
-            throw new NotImplementedException();
+            bool result = false;
+            if (map.CalculateGravity())
+            {
+                result = true;
+            }
+            for (int i = 0; i < Playertanks.Length; i++)
+            {
+                if (Playertanks[i].CalculateGravity())
+                {
+                    result = true;
+                }
+            }
+            return result;
         }
 
         public bool TurnOver()
