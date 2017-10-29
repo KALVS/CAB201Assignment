@@ -81,8 +81,8 @@ namespace TankBattle
         {
             //Alex Holm N9918205
             //fix me
-            
 
+            this.power = power;
             
 
         }
@@ -140,8 +140,9 @@ namespace TankBattle
             // then call WeaponLaunch() on that Chassis,
             // passing in the current weapon, 
             //the this reference and the private Gameplay field of PlayerTank.
-            GetTank().WeaponLaunch(current_weapon, current_tank, this.current_game);
-
+            GetTank();
+            current_chassis.WeaponLaunch(current_weapon, current_tank, this.current_game);
+            
 
 
         }
