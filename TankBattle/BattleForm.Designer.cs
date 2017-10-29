@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BattleForm));
             this.displayPanel = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
+            this.PowerIndicatorLabel = new System.Windows.Forms.Label();
             this.FireButton = new System.Windows.Forms.Button();
             this.PowerBar = new System.Windows.Forms.TrackBar();
             this.AngleNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -44,7 +45,6 @@
             this.PlayerLabel = new System.Windows.Forms.Label();
             this.WindLeaveMeAlone = new System.Windows.Forms.Label();
             this.weaponEffectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.PowerIndicatorLabel = new System.Windows.Forms.Label();
             this.controlPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PowerBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AngleNumericUpDown)).BeginInit();
@@ -83,6 +83,14 @@
             this.controlPanel.TabIndex = 1;
             this.controlPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.controlPanel_Paint);
             // 
+            // PowerIndicatorLabel
+            // 
+            this.PowerIndicatorLabel.AutoSize = true;
+            this.PowerIndicatorLabel.Location = new System.Drawing.Point(641, 11);
+            this.PowerIndicatorLabel.Name = "PowerIndicatorLabel";
+            this.PowerIndicatorLabel.Size = new System.Drawing.Size(0, 13);
+            this.PowerIndicatorLabel.TabIndex = 9;
+            // 
             // FireButton
             // 
             this.FireButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -92,6 +100,7 @@
             this.FireButton.TabIndex = 8;
             this.FireButton.Text = "Fire!";
             this.FireButton.UseVisualStyleBackColor = true;
+            this.FireButton.Click += new System.EventHandler(this.FireButton_Click);
             // 
             // PowerBar
             // 
@@ -208,14 +217,6 @@
             // weaponEffectBindingSource
             // 
             this.weaponEffectBindingSource.DataSource = typeof(TankBattle.WeaponEffect);
-            // 
-            // PowerIndicatorLabel
-            // 
-            this.PowerIndicatorLabel.AutoSize = true;
-            this.PowerIndicatorLabel.Location = new System.Drawing.Point(641, 11);
-            this.PowerIndicatorLabel.Name = "PowerIndicatorLabel";
-            this.PowerIndicatorLabel.Size = new System.Drawing.Size(0, 13);
-            this.PowerIndicatorLabel.TabIndex = 9;
             // 
             // BattleForm
             // 
