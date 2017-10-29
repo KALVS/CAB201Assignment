@@ -18,9 +18,11 @@ namespace TankBattle
         private int startingplayer;
         private Opponent currentplayer;
         private Battlefield map;
-        private int[] playerpos;
+        private int[] playerpos = new int[8];
         private PlayerTank[] Playertanks;
         private int wind;
+        private PlayerTank current_tank;
+        private Chassis current_chassis;
         Random rnd = new Random();
 
         public Gameplay(int numPlayers, int numRounds)
@@ -75,7 +77,7 @@ namespace TankBattle
             }
             return numberOfRounds;
         }
-
+        
         public void RegisterPlayer(int playerNum, Opponent player)
         {
             //<Summary>
@@ -236,8 +238,8 @@ namespace TankBattle
             //Initialising the wind speed, another private field of Gameplay, to a random number between -100 and 100.
             WindSpeed();
             //Creating a new BattleForm and Show()ing it.
-            //BattleForm BF = new BattleForm(this);
-            //BF.Show();
+            BattleForm Form = new BattleForm(this);
+            Form.Show();
         }
 
         public Battlefield GetMap()
@@ -257,9 +259,7 @@ namespace TankBattle
                     //If it is, call its Render() method, passing in graphics and displaySize.
                     Playertanks[i].Render(graphics, displaySize);
                 }
-            }
-//If it is, call its Render() method, passing in graphics and displaySize.
-            //throw new NotImplementedException();
+            };
         }
 
         public PlayerTank GetCurrentPlayerTank()
@@ -282,22 +282,74 @@ namespace TankBattle
 
         public bool ProcessWeaponEffects()
         {
-            throw new NotImplementedException();
+            int steps = 0;
+            for (int i = 0; i < Weapon_effects.Count; i++)
+            {
+                if (Weapon_effects == null) { }
+                else
+                {
+                    Weapon_effects[i].Step();
+                    steps++;
+                }
+            }
+            if (steps == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public void DisplayEffects(Graphics graphics, Size displaySize)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Weapon_effects.Count; i++)
+            {
+                GetCurrentPlayerTank().Render(graphics, displaySize);
+            }
         }
 
         public void CancelEffect(WeaponEffect weaponEffect)
         {
-            throw new NotImplementedException();
+            Weapon_effects.Remove(weaponEffect);
         }
 
         public bool CheckCollidedTank(float projectileX, float projectileY)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            if ( projectileX < 0 || projectileY < 0 || projectileX > Battlefield.WIDTH || projectileY > Battlefield.HEIGHT)
+            {
+                result = false;
+            }
+            if (map.IsTileAt((int)projectileX, (int)projectileY)){
+                result = true;
+            }
+            current_tank = GetCurrentPlayerTank();
+            int current_tankY = current_tank.GetY();
+            int current_tankX = current_tank.XPos();
+            if ( current_tankY == (int)projectileY && current_tankX == (int)projectileX)
+            {
+                if (current_tank.Alive())
+                {
+                    result = true;
+                }
+            }
+            for (int i = 0; i < Playertanks.Length; i++)
+            {
+                if (Playertanks[i].XPos() < projectileX &&
+                    Playertanks[i].XPos() + Playertanks[i].XPos() + Chassis.WIDTH > projectileX &&
+                    Playertanks[i].GetY() < projectileY &&
+                    Chassis.HEIGHT + Playertanks[i].GetY() > projectileY)
+                {
+                    if (Playertanks[i].Alive())
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
         }
 
         public void DamagePlayer(float damageX, float damageY, float explosionDamage, float radius)

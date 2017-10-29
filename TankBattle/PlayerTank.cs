@@ -14,8 +14,8 @@ namespace TankBattle
         private Chassis current_chassis;
         private PlayerTank current_playerTank;
         private BattleForm BF;
-        private int TX, TY, startingArmour, angle, current_weapon, current_velocity;
-        private float power;
+        private int TX, TY, startingArmour, current_weapon, current_velocity;
+        private float power, current_angle;
         private Bitmap current_tank;
         private int armour;
         public PlayerTank(Opponent player, int tankX, int tankY, Gameplay game)
@@ -27,11 +27,12 @@ namespace TankBattle
             current_game = game;
             current_chassis = current_player.GetTank();
             startingArmour = current_chassis.GetTankHealth();
-            angle = 0;
+            current_angle = 0;
             power = 25;
             current_weapon = 0;
             AimTurret(GetAngle());
             armour = current_chassis.GetTankHealth();
+            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), current_angle);
         }
 
         public Opponent GetPlayer()
@@ -48,13 +49,14 @@ namespace TankBattle
         public float GetAngle()
         {
             //Alex Holm N9918205
-            return angle;
+            return current_angle;
         }
 
         public void AimTurret(float angle)
         {
             //Alex Holm N9918205
-            current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), angle);
+            current_angle = angle;
+            //current_tank = current_chassis.CreateTankBitmap(current_player.GetColour(), current_angle);
         }
 
         public int GetPower()
@@ -82,7 +84,7 @@ namespace TankBattle
         }
         public void ChangeWeapon(int newWeapon)
         {
-            throw new NotImplementedException();
+            current_playerTank.current_weapon = newWeapon;
         }
 
         public void Render(Graphics graphics, Size displaySize)

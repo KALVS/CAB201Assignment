@@ -18,6 +18,8 @@ namespace TankBattle
         {
             Sx = x;
             Sy = y;
+            Splayer = player;
+            Sexplosion = explosion;
             Sgravity = gravity;
             float angleRadians = (90 - angle) * (float)Math.PI / 180;
             float magnitude = power / 50;
@@ -28,12 +30,41 @@ namespace TankBattle
 
         public override void Step()
         {
-            throw new NotImplementedException();
+            for( int i = 0; i < 9; i++)
+            {
+                //increase Sx and Sy
+                Sx += SxVelocity;
+                Sy += SyVelocity;
+                //increase Sx with WindSpeed
+                Sx += protected_game.WindSpeed() / 1000.0f;
+                //if left screen
+                if (Sx < 0 || Sx > Battlefield.WIDTH || Sy > Battlefield.HEIGHT || Sy < 0)
+                {
+                    protected_game.CancelEffect(this);
+                    return;
+                } else
+                if (protected_game.CheckCollidedTank(Sx, Sy))
+                {
+                    Splayer.ProjectileHit(Sx, Sy);
+                    Sexplosion.Activate(Sx, Sy);
+                    protected_game.AddEffect(Sexplosion);
+                    protected_game.CancelEffect(this);
+                    return;
+                }
+                SyVelocity += Sgravity;
+            }
         }
 
         public override void Render(Graphics graphics, Size size)
         {
-            throw new NotImplementedException();
+            float x = (float)this.Sx * size.Width / Battlefield.WIDTH;
+            float y = (float)this.Sy * size.Height / Battlefield.HEIGHT;
+            float s = size.Width / Battlefield.WIDTH;
+
+            RectangleF r = new RectangleF(x - s / 2.0f, y - s / 2.0f, s, s);
+            Brush b = new SolidBrush(Color.WhiteSmoke);
+
+            graphics.FillEllipse(b, r);
         }
     }
 }

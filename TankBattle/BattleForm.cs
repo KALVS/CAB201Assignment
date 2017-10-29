@@ -23,9 +23,9 @@ namespace TankBattle
         private Timer myTimer = new Timer();
         private Gameplay currentGame;
         private Opponent current_player;
-        private Chassis current_tank;
-        private PlayerTank current_playerTank;
-        int second_call = 0;
+        private Chassis current_chassis;
+        private PlayerTank current_tank;
+        private string[] weapons;
 
         private BufferedGraphics backgroundGraphics;
         private BufferedGraphics gameplayGraphics;
@@ -94,24 +94,24 @@ namespace TankBattle
             //Alex Holm
             //</Summary>
             
-            currentGame.GetCurrentPlayerTank();
-            current_playerTank.GetPlayer();
+            current_tank = currentGame.GetCurrentPlayerTank();
+            
+            current_player = current_tank.GetPlayer();
             string Title = ("Tank Battle - Round " + currentGame.CurrentRound() + " of " + currentGame.GetMaxRounds());
             this.Text = Title;
             controlPanel.BackColor = current_player.GetColour();
-            PlayerLabel.Text = current_playerTank.GetPlayer().ToString();
-            AimTurret(current_playerTank.GetAngle());
-            SetForce(current_playerTank.GetPower());
+            PlayerLabel.Text = current_player.Identifier();
+            AimTurret(current_tank.GetAngle());
+            SetForce(current_tank.GetPower());
             Wind.Text = currentGame.WindSpeed().ToString();
-            weaponComboBox.SelectedIndex = -1;
-            current_playerTank.GetTank().Weapons();
-            for (int i = 0; i < current_tank.Weapons().Count(); i++)
+            weaponComboBox.Items.Clear();
+            Chassis current_chassiss = current_tank.GetTank();
+            foreach (String weapon in current_chassiss.Weapons())
             {
-                weaponComboBox.Items.Add(current_tank.Weapons()[i]);
+                weaponComboBox.Items.Add(weapon);
             }
-            ChangeWeapon(current_playerTank.GetPlayerWeapon());
+            ChangeWeapon(weaponComboBox.SelectedIndex);
             current_player.BeginTurn(this, currentGame);
-            
         }
 
 
@@ -133,22 +133,23 @@ namespace TankBattle
 
         public void AimTurret(float angle)
         {
-            angle = (float)AngleNumericUpDown.Value;
+            AngleNumericUpDown.Value = (decimal)angle;
         }
 
         public void SetForce(int power)
         {
-            power = (int)PowerBar.Value;
+            PowerBar.Value = (int)power;
         }
         public void ChangeWeapon(int weapon)
         {
-            weapon = (int)weaponComboBox.SelectedValue;
+            weaponComboBox.SelectedValue = weapon;
+            weaponComboBox.SelectedValue = 0;
         }
 
         public void Attack()
         {
             currentGame.GetCurrentPlayerTank().Attack();
-            controlPanel.Enabled = false;
+            EnableTankButtons();
             myTimer.Start();
 
         }
