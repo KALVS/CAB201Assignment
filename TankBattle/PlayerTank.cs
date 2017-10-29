@@ -79,8 +79,9 @@ namespace TankBattle
 
         public void SetForce(int power)
         {
-            //Alex Holm N9918205
-            //fix me
+            /*<Summary> Julian Shores N9932798
+             * This method sets the PlayerTank's current turret velocity
+            */
 
             this.power = power;
             
