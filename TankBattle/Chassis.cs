@@ -31,7 +31,8 @@ namespace TankBattle
                 if (e2 < dy) { err += dx; Y1 += sy; }
             }
         }
-        
+
+
         public Bitmap CreateTankBitmap(Color tankColour, float angle)
         {
             int[,] tankGraphic = DrawTankSprite(angle);
@@ -116,25 +117,25 @@ namespace TankBattle
             {
                 if (angle < 22.5)
                 {
-                    LineDraw(graphic, 7, 6, 7, 1);
+                    LineDraw(graphic, 6, 5, 6, 2);
                 }
             }
             //If turret is Left
             if (angle < -67.5)
             {
-                LineDraw(graphic, 7, 6, 2, 6);
+                LineDraw(graphic, 6, 5, 1, 5);
             }
             //If Turret is right
             if (angle >= 67.5)
             {
-                LineDraw(graphic, 7, 6, 12, 6);
+                LineDraw(graphic, 6, 5, 11, 5);
             }
             //Angled to the left
             if (angle >= -67.5)
             {
                 if (angle < -22.5)
                 {
-                    LineDraw(graphic, 7, 6, 3, 2);
+                    LineDraw(graphic, 6, 5, 2, 1);
                 }
             }
             //Angled to the right
@@ -142,7 +143,7 @@ namespace TankBattle
             {
                 if (angle < 67.5)
                 {
-                    LineDraw(graphic, 7, 6, 1, 2);
+                    LineDraw(graphic, 6, 5, 0, 1);
                 }
             }
             

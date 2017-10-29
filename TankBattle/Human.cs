@@ -11,7 +11,6 @@ namespace TankBattle
 
     public class Human : Opponent
     {
-        //This most likely is wrong.
         private string name;
         private Chassis tank;
         private Color colour;
