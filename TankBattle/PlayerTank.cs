@@ -94,10 +94,10 @@ namespace TankBattle
         }
         public void ChangeWeapon(int newWeapon)
         {
-            //Fix me
-            //Alex Holm N9912805
-            current_tank = current_game.GetCurrentPlayerTank();
-          //  newWeapon = current_tank.current_weapon;
+            /* <Summary> Julian Shores N9932798
+             * This method sets the PlayerTank's current weapon.
+            */
+            this.current_weapon = newWeapon;
         }
 
         public void Render(Graphics graphics, Size displaySize)
