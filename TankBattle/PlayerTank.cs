@@ -96,7 +96,7 @@ namespace TankBattle
         {
             /* <Summary> Julian Shores N9932798
              * This method sets the PlayerTank's current weapon.
-            */
+               </Summary>*/
             this.current_weapon = newWeapon;
         }
 
@@ -133,19 +133,14 @@ namespace TankBattle
 
         public void Attack()
         {
-            //Alex HOlm N9918205
-            //Fix me 
-
+            //<Summary> Julian Shores N9932798
             // This causes the PlayerTank to fire its current weapon
             //.This method should call its own GetTank() method,
             // then call WeaponLaunch() on that Chassis,
             // passing in the current weapon, 
-            //the this reference and the private Gameplay field of PlayerTank.
+            //the this reference and the private Gameplay field of PlayerTank. </Summary>
             GetTank();
-            current_chassis.WeaponLaunch(current_weapon, current_tank, this.current_game);
-            
-
-
+            current_chassis.WeaponLaunch(current_weapon, this, current_game);
         }
 
         public void DamagePlayer(int damageAmount)
