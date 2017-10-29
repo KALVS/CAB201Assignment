@@ -12,8 +12,8 @@ namespace TankBattle
         private Opponent current_player;
         private Gameplay current_game;
         private Chassis current_chassis;
-        private PlayerTank current_playerTank;
-        private Bitmap current_tank;
+        private PlayerTank current_tank;
+        private Bitmap current_tBMP;
         private int TX, TY, startingArmour, current_weapon;
         private float power, angle;
         private int armour;
@@ -35,7 +35,7 @@ namespace TankBattle
             AimTurret(GetAngle());
             armour = current_chassis.GetTankHealth();
             colour = current_player.GetColour();
-            current_tank = current_chassis.CreateTankBitmap(colour, angle);
+            current_tBMP = current_chassis.CreateTankBitmap(colour, angle);
         }
 
         public Opponent GetPlayer()
@@ -52,7 +52,7 @@ namespace TankBattle
         public float GetAngle()
         {
             //Alex Holm N9918205
-            //fix me
+            //fix me    
             return angle;
         }
 
@@ -60,14 +60,14 @@ namespace TankBattle
         {
             //Alex Holm N9918205
             this.angle = angle;
-            //this.colour = current_player.GetColour();
-            current_chassis.CreateTankBitmap(Color.Gainsboro, angle);
+            Color tankColour = current_player.GetColour()
+            current_tBMP = current_chassis.CreateTankBitmap(tankColour, angle);
         }
 
         public int GetPower()
         {
             //Alex Holm N9918205
-            if (power < 0.5)
+            if (power < 0.5f)
             {
                 power = 0.5f;
             } else if (power > 100f)
@@ -81,6 +81,7 @@ namespace TankBattle
         {
             //Alex Holm N9918205
             //fix me
+            
 
             
 
@@ -94,8 +95,8 @@ namespace TankBattle
         {
             //Fix me
             //Alex Holm N9912805
-            current_playerTank = current_game.GetCurrentPlayerTank();
-            newWeapon = current_playerTank.current_weapon;
+            current_tank = current_game.GetCurrentPlayerTank();
+          //  newWeapon = current_tank.current_weapon;
         }
 
         public void Render(Graphics graphics, Size displaySize)
@@ -105,7 +106,7 @@ namespace TankBattle
             int drawY1 = displaySize.Height * TY / Battlefield.HEIGHT;
             int drawX2 = displaySize.Width * (TX + Chassis.WIDTH) / Battlefield.WIDTH;
             int drawY2 = displaySize.Height * (TY + Chassis.HEIGHT) / Battlefield.HEIGHT;
-            graphics.DrawImage(current_tank, new Rectangle(drawX1, drawY1, drawX2 - drawX1, drawY2 - drawY1));
+            graphics.DrawImage(current_tBMP, new Rectangle(drawX1, drawY1, drawX2 - drawX1, drawY2 - drawY1));
 
             int drawY3 = displaySize.Height * (TY - Chassis.HEIGHT) / Battlefield.HEIGHT;
             Font font = new Font("Arial", 8);
@@ -139,7 +140,7 @@ namespace TankBattle
             // then call WeaponLaunch() on that Chassis,
             // passing in the current weapon, 
             //the this reference and the private Gameplay field of PlayerTank.
-            GetTank().WeaponLaunch(current_weapon, current_playerTank, this.current_game);
+            GetTank().WeaponLaunch(current_weapon, current_tank, this.current_game);
 
 
 
