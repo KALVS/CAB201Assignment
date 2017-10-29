@@ -60,7 +60,7 @@ namespace TankBattle
         {
             //Alex Holm N9918205
             this.angle = angle;
-            Color tankColour = current_player.GetColour()
+            Color tankColour = current_player.GetColour();
             current_tBMP = current_chassis.CreateTankBitmap(tankColour, angle);
         }
 
