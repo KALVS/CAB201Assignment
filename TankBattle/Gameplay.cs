@@ -17,7 +17,7 @@ namespace TankBattle
         private Opponent[] opponents;
         private int current_round;
         private int startingplayer;
-        private int currentplayer;
+        protected int currentplayer;
         protected Battlefield map;
         private int[] playerpos = new int[8];
         protected PlayerTank[] Playertanks;
@@ -153,9 +153,14 @@ namespace TankBattle
             //<Summary>
             //Alex Holm N9918205
             //</summary>
-            current_round = 1;
+            if ( CurrentRound() < 1)
+            {
+                current_round = 1;
+                startingplayer = 0;
+            }
             startingplayer = 0;
             BeginRound();
+
         }
 
         public void BeginRound()
@@ -163,9 +168,11 @@ namespace TankBattle
             //<Summary>
             //Alex Holm N9918205
             //</summary>
-
+            Debug.WriteLine("Begin Begin Round");
             //Initialising a private field of Gameplay representing the current player to the value of the starting Opponent field(see CommenceGame).
+            Debug.WriteLine("Currentplayer = starting player" + currentplayer + ":" + startingplayer);
             currentplayer = startingplayer;
+            Debug.WriteLine("Currentplayer = starting player" + currentplayer + ":" + startingplayer);
             //Creating a new Battlefield, which is also stored as a private field of Gameplay.
             map = new Battlefield();
             //Creating an array of Opponent positions by calling GetPlayerPositions with the number of Opponents playing the game(hint: get the length of the Opponents array
@@ -222,7 +229,7 @@ namespace TankBattle
             //Alex Holm N918205
             //This method returns the PlayerTank associated with the current player.
             //Both the current player and an array of PlayerTank are private fields of Gameplay and are also initialised in BeginRound().
-            return Playertanks[startingplayer];
+            return Playertanks[currentplayer];
             
 
         }
@@ -384,7 +391,7 @@ namespace TankBattle
         public void NextRound()
         {
             current_round++;
-            if (current_round >= numberOfRounds)
+            if (current_round <= numberOfRounds)
             {
                 startingplayer++;
                 if (startingplayer >= numberOfPlayers)

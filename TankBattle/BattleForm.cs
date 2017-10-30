@@ -23,7 +23,7 @@ namespace TankBattle
         private int levelHeight = 120;
 
 
-        //static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
+        protected int currentplayer;
         private Gameplay currentGame;
         private Opponent current_player;
         private Chassis current_chassis;
@@ -93,6 +93,7 @@ namespace TankBattle
 
             Debug.WriteLine("drawgameplay pt 3");
             currentGame.DisplayEffects(gameplayGraphics.Graphics, displayPanel.Size);
+            Debug.WriteLine("drawGameplay Done");
         }
 
 
@@ -115,11 +116,13 @@ namespace TankBattle
             string Title = ("Tank Battle - Round " + currentGame.CurrentRound() + " of " + currentGame.GetMaxRounds());
             this.Text = Title;
             Debug.WriteLine("CurrentForm Title Get Finalized");
+
+            Debug.WriteLine("Current Player colour to control panel start");
             controlPanel.BackColor = current_player.GetColour();
+            Debug.WriteLine("Current player colour to control panel done");
             PlayerLabel.Text = current_player.Identifier();
             AimTurret(current_tank.GetAngle());
-            int powerString = current_tank.GetPower();
-            PowerIndicatorLabel.Text = powerString.ToString();
+            PowerIndicatorLabel.Text = current_tank.GetPower().ToString();
             SetForce(current_tank.GetPower());
             
             if (currentGame.WindSpeed() > 0)

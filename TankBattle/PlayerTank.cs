@@ -92,6 +92,7 @@ namespace TankBattle
         {   //Alex Holm N9918205
             return current_weapon;
         }
+
         public void ChangeWeapon(int newWeapon)
         {
             /* <Summary> Julian Shores N9932798
@@ -142,6 +143,7 @@ namespace TankBattle
             Debug.WriteLine("attack from playertank");
             GetTank();
             current_chassis.WeaponLaunch(current_weapon, this, current_game);
+            Debug.WriteLine("Playertank attack done");
 
         }
 
