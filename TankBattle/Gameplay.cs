@@ -403,6 +403,8 @@ namespace TankBattle
             }
             if (current_round > numberOfRounds)
             {
+                Leaderboard leader = new Leaderboard();
+                leader.Show();
             }
         }
         
