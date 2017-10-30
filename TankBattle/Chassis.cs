@@ -161,8 +161,8 @@ namespace TankBattle
             //Alex Holm N9918205
             float x = (playerTank.XPos());
             float y =(playerTank.GetY());
-            x += (Chassis.WIDTH - 1)/2;
-            y += (Chassis.HEIGHT - 1)/2;
+            x += (Chassis.WIDTH)/2;
+            y += (Chassis.HEIGHT)/2;
             Opponent player = playerTank.GetPlayer();
             Shrapnel shrap = new Shrapnel(100, 4, 4);
             Shell Std_shell = new Shell(x, y, playerTank.GetAngle(), playerTank.GetPower(), 0.01f, shrap, player);

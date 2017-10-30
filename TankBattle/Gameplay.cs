@@ -17,7 +17,7 @@ namespace TankBattle
         private Opponent[] opponents;
         private int current_round;
         private int startingplayer;
-        private Opponent currentplayer;
+        private int currentplayer;
         protected Battlefield map;
         private int[] playerpos = new int[8];
         protected PlayerTank[] Playertanks;
@@ -165,7 +165,7 @@ namespace TankBattle
             //</summary>
 
             //Initialising a private field of Gameplay representing the current player to the value of the starting Opponent field(see CommenceGame).
-            currentplayer = opponents[startingplayer];
+            currentplayer = startingplayer;
             //Creating a new Battlefield, which is also stored as a private field of Gameplay.
             map = new Battlefield();
             //Creating an array of Opponent positions by calling GetPlayerPositions with the number of Opponents playing the game(hint: get the length of the Opponents array
@@ -268,20 +268,29 @@ namespace TankBattle
             if (map.IsTileAt((int)projectileX, (int)projectileY)){
                 return true;
             }
-            current_tank = GetCurrentPlayerTank();
-            int current_tankY = current_tank.GetY();
-            int current_tankX = current_tank.XPos();
-            int current_tankRight = current_tankX + Chassis.WIDTH;
-            int current_tankBott = current_tankY + Chassis.HEIGHT;
-            if (projectileX >= current_tankX &&
-                projectileX <= current_tankRight)
+            for (int i = 0; i < Playertanks.Length; i++)
             {
-                if (projectileY >= current_tankY &&
-                    projectileY <= current_tankBott)
+                current_tank = Playertanks[i];
+                if (i == currentplayer)
                 {
-                    return true;
+                    return false;
                 }
+                int current_tankY = current_tank.GetY();
+                int current_tankX = current_tank.XPos();
+                int current_tankRight = current_tankX + Chassis.WIDTH;
+                int current_tankBott = current_tankY + Chassis.HEIGHT;
+                if (projectileX >= current_tankX &&
+                    projectileX <= current_tankRight)
+                {
+                    if (projectileY >= current_tankY &&
+                        projectileY <= current_tankBott)
+                    {
+                        return true;
+                    }
+                }
+
             }
+
             return false;
         }
 
@@ -328,7 +337,6 @@ namespace TankBattle
 
         public bool TurnOver()
         {
-            bool result = true;
             int players_alive = 0;
             for (int i = 0; i < opponents.Length; i++)
             {
@@ -337,18 +345,29 @@ namespace TankBattle
                     players_alive++;
                 }
             }
-            if (players_alive >= 2)
+            if (players_alive > 1)
             {
-                wind = wind + rnd.Next(-10, 10);
-                result = true;
+                for (int i = 0; i < players_alive; i++)
+                {
+                    currentplayer++;
+                    if ( currentplayer >= Playertanks.Length)
+                    {
+                        currentplayer = 0;
+                    }
+                    if (Playertanks[currentplayer].Alive())
+                    {
+
+                        wind = wind + rnd.Next(-10, 10);
+                        return true;
+                    }
+                }
             }
-            else if (players_alive == 0 || players_alive == 1)
+            if ( players_alive == 1)
             {
                 ScoreWinner();
-                result = false;
-                
+                return false;
             }
-                return result;
+            return false;
         }
 
         public void ScoreWinner()
@@ -365,6 +384,19 @@ namespace TankBattle
         public void NextRound()
         {
             current_round++;
+            if (current_round >= numberOfRounds)
+            {
+                startingplayer++;
+                if (startingplayer >= numberOfPlayers)
+                {
+                    startingplayer = 0;
+                }
+                CommenceGame();
+                
+            }
+            if (current_round > numberOfRounds)
+            {
+            }
         }
         
         public int WindSpeed()

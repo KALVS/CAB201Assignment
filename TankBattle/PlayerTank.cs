@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -12,7 +13,6 @@ namespace TankBattle
         private Opponent current_player;
         private Gameplay current_game;
         private Chassis current_chassis;
-        private PlayerTank current_tank;
         private Bitmap current_tBMP;
         private int TX, TY, startingArmour, current_weapon;
         private float power, angle;
@@ -139,8 +139,10 @@ namespace TankBattle
             // then call WeaponLaunch() on that Chassis,
             // passing in the current weapon, 
             //the this reference and the private Gameplay field of PlayerTank. </Summary>
+            Debug.WriteLine("attack from playertank");
             GetTank();
             current_chassis.WeaponLaunch(current_weapon, this, current_game);
+
         }
 
         public void DamagePlayer(int damageAmount)
@@ -156,9 +158,8 @@ namespace TankBattle
             {
                 return true;
             }
-            else { return false; }
-        
-        }
+            return false;
+            }
 
         public bool CalculateGravity()
         {
