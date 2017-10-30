@@ -170,6 +170,7 @@ namespace TankBattle
         public void SetForce(int power)
         {
             PowerBar.Value = (int)power;
+            current_tank.SetForce(power);
         }
         public void ChangeWeapon(int weapon)
         {

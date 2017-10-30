@@ -67,6 +67,7 @@ namespace TankBattle
         public int GetPower()
         {
             //Alex Holm N9918205
+            Debug.WriteLine("Playertank GetPower begin");
             if (power < 0.5f)
             {
                 power = 0.5f;
@@ -74,6 +75,8 @@ namespace TankBattle
             {
                 power = 100f;
             }
+
+            Debug.WriteLine("Playertank GetPower End");
             return (int)power;
         }
 
