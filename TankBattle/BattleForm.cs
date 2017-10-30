@@ -104,8 +104,18 @@ namespace TankBattle
             controlPanel.BackColor = current_player.GetColour();
             PlayerLabel.Text = current_player.Identifier();
             AimTurret(current_tank.GetAngle());
+            int powerString = current_tank.GetPower();
+            Power.Text = powerString.ToString();
             SetForce(current_tank.GetPower());
-            Wind.Text = currentGame.WindSpeed().ToString();
+            
+            if (currentGame.WindSpeed() > 0)
+            {
+                Wind.Text = currentGame.WindSpeed().ToString() + " E";
+            } else
+            {
+                Wind.Text = Math.Abs(currentGame.WindSpeed()).ToString() + " W";
+            }
+            
             weaponComboBox.Items.Clear();
             Chassis current_chassiss = current_tank.GetTank();
             foreach (String weapon in current_chassiss.Weapons())
