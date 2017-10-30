@@ -16,5 +16,19 @@ namespace TankBattle
         {
             InitializeComponent();
         }
+
+        private void newGameButton_Click(object sender, EventArgs e)
+        {
+            /* <Summary> Julian Shores N9932798
+             * Initiates game upon clicking the start button
+             * </Summary> 
+             */
+            Gameplay game = new Gameplay(2, 1);
+            Opponent player1 = new Human("Player 1", Chassis.GetTank(1), Gameplay.GetColour(1));
+            Opponent player2 = new Human("Player 2", Chassis.GetTank(1), Gameplay.GetColour(2));
+            game.RegisterPlayer(1, player1);
+            game.RegisterPlayer(2, player2);
+            game.CommenceGame();
+        }
     }
 }
