@@ -30,6 +30,7 @@ namespace TankBattle
         public override void Step()
         {
             //This method reduces the Shrapnel's lifespan by 0.05, and if it reaches 0 (or lower), does the following:
+
             lifespan -= 0.05f;
             if( lifespan <= 0)
             {
