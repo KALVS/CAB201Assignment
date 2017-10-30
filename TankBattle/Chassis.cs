@@ -110,34 +110,34 @@ namespace TankBattle
                    { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
                    { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-            //Left
-            if (angle <= -22)
-            {
-                if (angle < -67 && angle >= -90)
-                {
-                    LineDraw(graphic, 6, 5, 1, 5);
-                    //Angle Let
-                }
-                if (angle > -67 && angle <= -22)
-                {
-                    LineDraw(graphic, 6, 5, 2, 1);
-                }
-            } else
-            if (angle >= 22)
-            {
-                if (angle > 67 && angle <= 90)
-                {
-                    LineDraw(graphic, 6, 5, 11, 5);
-                }
-                if (angle > 22 && angle <= 67)
-                {
-                    LineDraw(graphic, 6, 5, 0, 1);
-                }
 
+            if (angle >= (float)23)
+            {
+                if (angle > 23 && angle <= 67)
+                {
+                    LineDraw(graphic, 5, 6, 1, 11);
+                }
+                if (angle > 68 && angle <= 90)
+                {
+                    LineDraw(graphic, 5, 6, 5, 11);
+                }
+            }
+            //Left
+            if (angle <= (float)-23)
+            {
+                if (angle < -65 && angle >= -90)
+                {
+                    LineDraw(graphic, 5, 6, 5, 1);
+                    //Angle Left
+                }
+                if (angle > -66 && angle < -23)
+                {
+                    LineDraw(graphic, 5, 6, 1, 2);
+                }
             }
             if (angle > -22 && angle < 22)
             {
-                LineDraw(graphic, 6, 5, 6, 1);
+                LineDraw(graphic, 5, 6, 1, 6);
             }
             return graphic;
         }
