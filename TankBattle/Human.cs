@@ -11,9 +11,9 @@ namespace TankBattle
 
     public class Human : Opponent
     {
-        private string name;
-        private Chassis tank;
-        private Color colour;
+        protected new string name;
+        protected new Chassis tank;
+        protected new Color colour;
         public Human(string name, Chassis tank, Color colour) : base(name, tank, colour)
         {
             this.name = name;

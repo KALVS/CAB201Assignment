@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -101,7 +102,8 @@ namespace TankBattle
             //Schlomo can suck it. Why would you give me the incorrect numbers to draw the line?
             //Tell me to do it myself or give the right numbers, dont provide me with incorrect information.
             //It is a dog act.
-            int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            int[,] graphic = { 
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -148,19 +150,24 @@ namespace TankBattle
 
         public override int GetTankHealth()
         {
+            Debug.WriteLine("Chassis GetTankHealth Start");
             //Alex Holme N9918205
             return 100;
         }
 
         public override void WeaponLaunch(int weapon, PlayerTank playerTank, Gameplay currentGame)
         {
+            Debug.WriteLine("Chassis WeaponLaunch Start");
             //Alex Holm N9918205
-            float x = (float)(playerTank.XPos() + Chassis.WIDTH/2);
-            float y = (float)(playerTank.GetY() + Chassis.HEIGHT/2);
+            float x = (playerTank.XPos());
+            float y =(playerTank.GetY());
+            x += (Chassis.WIDTH - 1)/2;
+            y += (Chassis.HEIGHT - 1)/2;
             Opponent player = playerTank.GetPlayer();
             Shrapnel shrap = new Shrapnel(100, 4, 4);
-            Shell shock = new Shell(x, y, playerTank.GetAngle(), playerTank.GetPower(), 0.01f, shrap, playerTank.GetPlayer());
-            currentGame.AddEffect(shock);
+            Shell Std_shell = new Shell(x, y, playerTank.GetAngle(), playerTank.GetPower(), 0.01f, shrap, player);
+            currentGame.AddEffect(Std_shell);
+            Debug.WriteLine("Chassis WeaponLaunch Complete");
 
         }
 

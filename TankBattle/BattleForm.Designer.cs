@@ -45,6 +45,7 @@
             this.PlayerLabel = new System.Windows.Forms.Label();
             this.WindLeaveMeAlone = new System.Windows.Forms.Label();
             this.weaponEffectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.controlPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PowerBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AngleNumericUpDown)).BeginInit();
@@ -218,6 +219,11 @@
             // 
             this.weaponEffectBindingSource.DataSource = typeof(TankBattle.WeaponEffect);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 20;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // BattleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +261,7 @@
         private System.Windows.Forms.TrackBar PowerBar;
         private System.Windows.Forms.Button FireButton;
         private System.Windows.Forms.Label PowerIndicatorLabel;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

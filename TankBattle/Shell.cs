@@ -24,14 +24,14 @@ namespace TankBattle
             Sgravity = gravity;
             float angleRadians = (90 - angle) * (float)Math.PI / 180;
             float magnitude = power / 50;
-            SxVelocity = (float) Math.Cos(angleRadians) * magnitude;
+            SxVelocity = (float)Math.Cos(angleRadians) * magnitude;
             SyVelocity = (float)Math.Sin(angleRadians) * -magnitude;
 
         }
 
         public override void Step()
         {
-            for( int i = 0; i < 9; i++)
+            for( int i = 1; i < 10; i++)
             {
                 //increase Sx and Sy
                 Sx += SxVelocity;
@@ -39,18 +39,18 @@ namespace TankBattle
                 //increase Sx with WindSpeed
                 Sx += protected_game.WindSpeed() / 1000.0f;
                 //if left screen
-                if (Sx < 0 || Sx > Battlefield.WIDTH || Sy > Battlefield.HEIGHT || Sy < 0)
+                if (Sx <= 0 || Sx >= Battlefield.WIDTH || Sy >= Battlefield.HEIGHT || Sy <= 0)
                 {
                     protected_game.CancelEffect(this);
                     return;
-                } else
+                }
+                else
                 if (protected_game.CheckCollidedTank(Sx, Sy))
                 {
                     Splayer.ProjectileHit(Sx, Sy);
                     Sexplosion.Activate(Sx, Sy);
                     protected_game.AddEffect(Sexplosion);
                     protected_game.CancelEffect(this);
-                    return;
                 }
                 SyVelocity += Sgravity;
             }

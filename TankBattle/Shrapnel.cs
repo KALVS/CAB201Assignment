@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -34,9 +35,11 @@ namespace TankBattle
             lifespan -= 0.05f;
             if( lifespan <= 0)
             {
+                lifespan = 0;
                 protected_game.DamagePlayer(shrapX, shrapY, ExDam, ExRad);
                 BatField = protected_game.GetMap();
                 BatField.TerrainDestruction(shrapX, shrapY, ExRad);
+                Debug.WriteLine("Destroy Battefield geezy");
                 protected_game.CancelEffect(this);
             }
             

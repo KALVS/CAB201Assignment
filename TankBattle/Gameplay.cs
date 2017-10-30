@@ -17,12 +17,12 @@ namespace TankBattle
         private Opponent[] opponents;
         private int current_round;
         private int startingplayer;
-        protected Opponent currentplayer;
-        private Battlefield map;
+        private Opponent currentplayer;
+        protected Battlefield map;
         private int[] playerpos = new int[8];
-        private PlayerTank[] Playertanks;
+        protected PlayerTank[] Playertanks;
         private int wind;
-        private PlayerTank current_tank;
+        protected PlayerTank current_tank;
         private Chassis current_chassis;
         Random rnd = new Random();
 
@@ -31,7 +31,7 @@ namespace TankBattle
             //<summary>
             //Alex Holm N9918205
             //</summary>
-            this.numberOfPlayers = numPlayers;
+            
             //Creates a numPlayers size array of Opponent(which is stored as a private field of Gameplay)
             this.opponents = new Opponent[numPlayers];
             //Sets another private field to the number of rounds that will be played
@@ -60,7 +60,6 @@ namespace TankBattle
             //<Summary>
             //Alex Holm N9918205
             //</summary>
-            current_round++;
             return current_round;
         }
 
@@ -238,31 +237,20 @@ namespace TankBattle
 
         public bool ProcessWeaponEffects()
         {
-            int steps = 0;
+            bool result = false;
             for (int i = 0; i < Weapon_effects.Count; i++)
             {
-                if (Weapon_effects == null) { }
-                else
-                {
-                    Weapon_effects[i].Step();
-                    steps++;
-                }
+                Weapon_effects[i].Step();
+                result = true;
             }
-            if (steps == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return result;
         }
 
         public void DisplayEffects(Graphics graphics, Size displaySize)
         {
             for (int i = 0; i < Weapon_effects.Count; i++)
             {
-                GetCurrentPlayerTank().Render(graphics, displaySize);
+                Weapon_effects[i].Render(graphics, displaySize);
             }
         }
 
@@ -273,39 +261,28 @@ namespace TankBattle
 
         public bool CheckCollidedTank(float projectileX, float projectileY)
         {
-            bool result = false;
             if ( projectileX < 0 || projectileY < 0 || projectileX > Battlefield.WIDTH || projectileY > Battlefield.HEIGHT)
             {
-                result = false;
+                return false;
             }
             if (map.IsTileAt((int)projectileX, (int)projectileY)){
-                result = true;
+                return true;
             }
             current_tank = GetCurrentPlayerTank();
             int current_tankY = current_tank.GetY();
             int current_tankX = current_tank.XPos();
-            if ( current_tankY == (int)projectileY && current_tankX == (int)projectileX)
+            int current_tankRight = current_tankX + Chassis.WIDTH;
+            int current_tankBott = current_tankY + Chassis.HEIGHT;
+            if (projectileX >= current_tankX &&
+                projectileX <= current_tankRight)
             {
-                if (current_tank.Alive())
+                if (projectileY >= current_tankY &&
+                    projectileY <= current_tankBott)
                 {
-                    result = true;
+                    return true;
                 }
             }
-            for (int i = 0; i < Playertanks.Length; i++)
-            {
-                if (Playertanks[i].XPos() < projectileX &&
-                    Playertanks[i].XPos() + Playertanks[i].XPos() + Chassis.WIDTH > projectileX &&
-                    Playertanks[i].GetY() < projectileY &&
-                    Chassis.HEIGHT + Playertanks[i].GetY() > projectileY)
-                {
-                    if (Playertanks[i].Alive())
-                    {
-                        result = true;
-                    }
-                }
-            }
-
-            return result;
+            return false;
         }
 
         public void DamagePlayer(float damageX, float damageY, float explosionDamage, float radius)
@@ -317,17 +294,17 @@ namespace TankBattle
                 {
                     int tankXcenter = Playertanks[i].XPos() + (Chassis.WIDTH / 2);
                     int tankYcenter = Playertanks[i].GetY() + (Chassis.HEIGHT / 2);
-                    double distance = Math.Sqrt(Math.Pow(tankXcenter - damageY, 2) + Math.Pow(tankYcenter - damageY, 2));
-                    if (distance > radius) { }
+                    float distance = (float)Math.Sqrt(Math.Pow(tankXcenter - damageY, 2) + Math.Pow(tankYcenter - damageY, 2));
                     if (distance < radius && distance > radius / 2)
                     {
-                        damagedone = explosionDamage * (radius - (float)distance) / radius;
-                    }
+                        float diff = distance - radius;
+                        damagedone = (explosionDamage * diff) / radius;
+                    } else
                     if (distance < radius / 2)
                     {
                         damagedone = explosionDamage;
                     }
-                    DamagePlayer(tankXcenter, tankYcenter, damagedone, radius);
+                    Playertanks[i].DamagePlayer((int)damagedone);
                 }
             }
         }
@@ -393,7 +370,7 @@ namespace TankBattle
         public int WindSpeed()
         {
             Random rnd = new Random();
-            int wind = rnd.Next(-100, 100);
+            wind = rnd.Next(-100, 100);
             return wind;
         }
     }

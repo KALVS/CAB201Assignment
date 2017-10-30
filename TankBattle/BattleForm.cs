@@ -22,7 +22,8 @@ namespace TankBattle
         private int levelWidth = 160;
         private int levelHeight = 120;
 
-        Timer myTimer = new Timer();
+
+        //static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         private Gameplay currentGame;
         private Opponent current_player;
         private Chassis current_chassis;
@@ -67,8 +68,6 @@ namespace TankBattle
 
             InitializeComponent();
 
-            myTimer.Interval = (20);
-
 
 
             backgroundGraphics =  InitDisplayBuffer();
@@ -78,29 +77,44 @@ namespace TankBattle
             DrawGameplay();
             NewTurn();
         }
-
-
-        private void DrawGameplay()
+        
+    
+        protected void DrawGameplay()
         {
             //begun Julain
             //Alex Holm N9918205
+
+            Debug.WriteLine("begin draw gameplay pt 1");
             backgroundGraphics.Render(gameplayGraphics.Graphics);
+            //debug code
+
+            Debug.WriteLine("drawgameplay pt 2");
             currentGame.DrawTanks(gameplayGraphics.Graphics, displayPanel.Size);
+
+            Debug.WriteLine("drawgameplay pt 3");
             currentGame.DisplayEffects(gameplayGraphics.Graphics, displayPanel.Size);
         }
 
 
-        private void NewTurn()
+        protected void NewTurn()
         {
             //<Summary>
             //Alex Holm N9918205
             //</Summary>
-            
+
+            Debug.WriteLine("CurrentTank Get Start");
             current_tank = currentGame.GetCurrentPlayerTank();
-            
+
+            Debug.WriteLine("CurrentTank Get Finalized");
+
+            Debug.WriteLine("CurrentPlayer Get Start");
             current_player = current_tank.GetPlayer();
+            Debug.WriteLine("CurrentTank Get Finalized");
+            
+            Debug.WriteLine("CurrentForm Title Get Start");
             string Title = ("Tank Battle - Round " + currentGame.CurrentRound() + " of " + currentGame.GetMaxRounds());
             this.Text = Title;
+            Debug.WriteLine("CurrentForm Title Get Finalized");
             controlPanel.BackColor = current_player.GetColour();
             PlayerLabel.Text = current_player.Identifier();
             AimTurret(current_tank.GetAngle());
@@ -124,6 +138,7 @@ namespace TankBattle
             }
             ChangeWeapon(weaponComboBox.SelectedIndex);
             current_player.BeginTurn(this, currentGame);
+            Debug.WriteLine("Newturn");
         }
 
 
@@ -147,7 +162,6 @@ namespace TankBattle
         {
             AngleNumericUpDown.Value =  (decimal)angle;
             current_tank.AimTurret(angle);
-            Console.WriteLine(angle);
         }
 
         public void SetForce(int power)
@@ -157,14 +171,16 @@ namespace TankBattle
         public void ChangeWeapon(int weapon)
         {
             weaponComboBox.SelectedValue = weapon;
-            weaponComboBox.SelectedValue = 0;
         }
 
         public void Attack()
         {
+            Debug.WriteLine("BAttleForm Attack begin");
             controlPanel.Enabled = false;
+
             currentGame.GetCurrentPlayerTank().Attack();
-            myTimer.Start();
+            timer1.Enabled = true;
+            Debug.WriteLine("BAttleForm Attack done");
 
         }
 
@@ -234,30 +250,46 @@ namespace TankBattle
 
         }
 
-        //Finally, create a Tick event for[ the Timer that you created earlier. A fair bit of logic needs to go into this Tick event as it is responsible for handling much of the animation and physics logic:
-        private void TimerEventProcessor()
+        private void FireButton_Click(object sender, EventArgs e)
         {
+            Attack();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            Debug.WriteLine("TimerEventProcessor start");
+            
             if (!currentGame.ProcessWeaponEffects())
             {
+                Debug.WriteLine("if (!currentGame.ProcessWeaponEffects())");
                 currentGame.CalculateGravity();
                 DrawBackground();
                 DrawGameplay();
                 displayPanel.Invalidate();
 
+
                 if (currentGame.CalculateGravity())
                 {
+
+                    Debug.WriteLine("return calculated gravity");
                     return;
-                }
-                if (!currentGame.CalculateGravity())
+                } else
                 {
-                    myTimer.Enabled = false;
+
+                    Debug.WriteLine("disable timer");
+                    timer1.Enabled = false;
 
                     if (currentGame.TurnOver())
                     {
                         NewTurn();
+
+                        Debug.WriteLine("Newturn done");
                     }
                     else
                     {
+
+                        Debug.WriteLine("turn over not done");
                         Dispose();
                         currentGame.NextRound();
                         return;
@@ -266,16 +298,13 @@ namespace TankBattle
             }
             else
             {
-                DrawGameplay(); displayPanel.Invalidate();
+
+                Debug.WriteLine("else processing");
+                DrawGameplay();
+                displayPanel.Invalidate();
                 return;
             }
-        }
-
-        private void FireButton_Click(object sender, EventArgs e)
-        {
-            controlPanel.Enabled = false;
-
-            Console.WriteLine("1 is workin");
+            
         }
     }
 }
