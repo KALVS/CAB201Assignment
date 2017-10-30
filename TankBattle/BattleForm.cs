@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -134,7 +135,9 @@ namespace TankBattle
 
         public void AimTurret(float angle)
         {
-            AngleNumericUpDown.Value = (decimal)angle;
+            AngleNumericUpDown.Value =  (decimal)angle;
+            current_tank.AimTurret(angle);
+            Console.WriteLine(angle);
         }
 
         public void SetForce(int power)
@@ -202,7 +205,7 @@ namespace TankBattle
         //The methods tied to each of these events should call the appropriate PlayerTank method (AimTurret(), SetForce(), ChangeWeapon()).
         private void AngleNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            AimTurret((int)AngleNumericUpDown.Value);
+            AimTurret((float)AngleNumericUpDown.Value);
             DrawGameplay();
             displayPanel.Invalidate();
         }
@@ -261,7 +264,8 @@ namespace TankBattle
         private void FireButton_Click(object sender, EventArgs e)
         {
             controlPanel.Enabled = false;
-            Attack();
+
+            Console.WriteLine("1 is workin");
         }
     }
 }

@@ -98,8 +98,7 @@ namespace TankBattle
         public override int[,] DrawTankSprite(float angle)
         {
             //Alex Holme N9918205
-            int[,] graphic = {
-                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -110,45 +109,39 @@ namespace TankBattle
                    { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
                    { 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0 },
                    { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
-                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
-            };
-            //If turret is upright
-            if (angle >= -22.5)
+                   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+            //Left
+            if (angle <= -22)
             {
-                if (angle < 22.5)
+                if (angle < -67 && angle >= -90)
                 {
-                    LineDraw(graphic, 6, 5, 6, 2);
+                    LineDraw(graphic, 6, 5, 1, 5);
+                    //Angle Let
                 }
-            }
-            //If turret is Left
-            if (angle < -67.5)
-            {
-                LineDraw(graphic, 6, 5, 1, 5);
-            }
-            //If Turret is right
-            if (angle >= 67.5)
-            {
-                LineDraw(graphic, 6, 5, 11, 5);
-            }
-            //Angled to the left
-            if (angle >= -67.5)
-            {
-                if (angle < -22.5)
+                if (angle > -67 && angle <= -22)
                 {
                     LineDraw(graphic, 6, 5, 2, 1);
                 }
-            }
-            //Angled to the right
-            if (angle >= 22.5)
+            } else
+            if (angle >= 22)
             {
-                if (angle < 67.5)
+                if (angle > 67 && angle <= 90)
+                {
+                    LineDraw(graphic, 6, 5, 11, 5);
+                }
+                if (angle > 22 && angle <= 67)
                 {
                     LineDraw(graphic, 6, 5, 0, 1);
                 }
+
             }
-            
+            if (angle > -22 && angle < 22)
+            {
+                LineDraw(graphic, 6, 5, 6, 1);
+            }
             return graphic;
         }
+        
 
         public override int GetTankHealth()
         {
