@@ -10,9 +10,9 @@ namespace TankBattle
     abstract public class Opponent
     {
         //Alex Holm
-        private string name;
-        private Chassis tank;
-        private Color colour;
+        protected string name;
+        protected Chassis tank;
+        protected Color colour;
         private int rounds_won;
         public Opponent(string name, Chassis tank, Color colour)
         {

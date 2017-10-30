@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace TankBattle
 {
@@ -16,7 +17,7 @@ namespace TankBattle
         private Opponent[] opponents;
         private int current_round;
         private int startingplayer;
-        private Opponent currentplayer;
+        protected Opponent currentplayer;
         private Battlefield map;
         private int[] playerpos = new int[8];
         private PlayerTank[] Playertanks;

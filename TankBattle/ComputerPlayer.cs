@@ -11,7 +11,9 @@ namespace TankBattle
     {
         public ComputerPlayer(string name, Chassis tank, Color colour) : base(name, tank, colour)
         {
-            throw new NotImplementedException();
+            base.name = name;
+            base.tank = tank;
+            base.colour = colour;
         }
 
         public override void StartRound()
@@ -21,7 +23,9 @@ namespace TankBattle
 
         public override void BeginTurn(BattleForm gameplayForm, Gameplay currentGame)
         {
-            throw new NotImplementedException();
+            gameplayForm.ChangeWeapon(currentGame.GetCurrentPlayerTank().GetPlayerWeapon());
+            gameplayForm.AimTurret(currentGame.GetCurrentPlayerTank().GetAngle());
+            gameplayForm.SetForce(currentGame.GetCurrentPlayerTank().GetPower());
         }
 
         public override void ProjectileHit(float x, float y)

@@ -23,7 +23,7 @@ namespace TankBattle
 
         public override void StartRound()
         {
-
+            return;
         }
 
         public override void BeginTurn(BattleForm gameplayForm, Gameplay currentGame)
@@ -33,7 +33,7 @@ namespace TankBattle
 
         public override void ProjectileHit(float x, float y)
         {
-
+            return;
         }
     }
 }
