@@ -98,6 +98,9 @@ namespace TankBattle
         public override int[,] DrawTankSprite(float angle)
         {
             //Alex Holme N9918205
+            //Schlomo can suck it. Why would you give me the incorrect numbers to draw the line?
+            //Tell me to do it myself or give the right numbers, dont provide me with incorrect information.
+            //It is a dog act.
             int[,] graphic = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
