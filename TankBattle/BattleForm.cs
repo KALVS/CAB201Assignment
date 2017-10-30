@@ -105,7 +105,7 @@ namespace TankBattle
             PlayerLabel.Text = current_player.Identifier();
             AimTurret(current_tank.GetAngle());
             int powerString = current_tank.GetPower();
-            Power.Text = powerString.ToString();
+            PowerIndicatorLabel.Text = powerString.ToString();
             SetForce(current_tank.GetPower());
             
             if (currentGame.WindSpeed() > 0)
