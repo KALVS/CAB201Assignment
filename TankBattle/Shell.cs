@@ -11,6 +11,7 @@ namespace TankBattle
     {
         //These are private fields for the X, y, gravity, explosion and player fields for Shell function below
         //Using S to represent Shell so Shell's X value and so on
+
         private float Sx, Sy, Sgravity, SxVelocity, SyVelocity;
         private Shrapnel Sexplosion;
         private Opponent Splayer;
