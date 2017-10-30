@@ -261,6 +261,7 @@ namespace TankBattle
         private void FireButton_Click(object sender, EventArgs e)
         {
             controlPanel.Enabled = false;
+            Attack();
         }
     }
 }
