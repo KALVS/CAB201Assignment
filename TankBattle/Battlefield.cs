@@ -37,7 +37,7 @@ namespace TankBattle
             }
             for (int d = 0; d < 100; d++)
             {
-                TerrainDestruction(rnd.Next(30, 100), rnd.Next(30, 140), rnd.Next(3, 10));
+                TerrainDestruction(rnd.Next(0, WIDTH), rnd.Next(0, HEIGHT), rnd.Next(3, 15));
             }
 
             while (CalculateGravity())
